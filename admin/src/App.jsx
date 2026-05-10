@@ -47,7 +47,7 @@ export default function App() {
   useEffect(() => { checkAuth(); }, []);
 
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="/admin">
       <Routes>
         <Route path="/" element={<Navigate to="/dashboard" replace />} />
 
