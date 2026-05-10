@@ -14,7 +14,7 @@ export default function Settings() {
     <div style={{display:"flex",flexDirection:"column",gap:"1.5rem"}}>
       <motion.div initial={{opacity:0,y:-12}} animate={{opacity:1,y:0}}><h1 className="page-title">Settings</h1><p className="page-subtitle">Platform configuration and admin preferences</p></motion.div>
       {saved&&<motion.div initial={{opacity:0,y:-8}} animate={{opacity:1,y:0}} style={{padding:"0.875rem 1.25rem",borderRadius:16,background:"rgba(34,197,94,0.1)",border:"1px solid rgba(34,197,94,0.3)",color:"#166534",fontWeight:600,fontSize:"0.875rem"}}>Settings saved successfully!</motion.div>}
-      <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(440px,1fr))",gap:"1.25rem"}}>
+      <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(280px,1fr))",gap:"1.25rem"}}>
         {SECTIONS.map((sec,si)=>(
           <motion.div key={sec.id} style={card} initial={{opacity:0,y:20}} animate={{opacity:1,y:0}} transition={{delay:si*0.08}}>
             <div style={{padding:"1.5rem"}}>

@@ -32,8 +32,9 @@ const useAuthStore = create(
       },
 
       checkAuth: async () => {
+        set({ loading: true });
         const token = localStorage.getItem('traveloop_admin_token');
-        if (!token) { set({ admin: null }); return; }
+        if (!token) { set({ admin: null, loading: false }); return; }
         try {
           const { data } = await api.get('/auth/me');
           if (data.role !== 'ADMIN') throw new Error('Not admin');
@@ -41,6 +42,8 @@ const useAuthStore = create(
         } catch {
           localStorage.removeItem('traveloop_admin_token');
           set({ admin: null, token: null });
+        } finally {
+          set({ loading: false });
         }
       },
     }),

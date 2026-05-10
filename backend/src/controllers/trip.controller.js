@@ -36,7 +36,7 @@ exports.getTripById = async (req, res) => {
 // POST /api/trips
 exports.createTrip = async (req, res) => {
   try {
-    const { title, description, startDate, endDate, coverImage, isPublic } = req.body;
+    const { title, description, startDate, endDate, coverImage, isPublic, startingLocation, destination, durationDays, packageType, basePrice, bestSeason, images, rating, views, popularity, isTrending, maxPeople, status } = req.body;
     if (!title || !startDate || !endDate)
       return res.status(400).json({ error: 'title, startDate, endDate required' });
 
@@ -45,10 +45,23 @@ exports.createTrip = async (req, res) => {
         userId: req.user.id,
         title,
         description,
+        startingLocation,
+        destination,
+        durationDays: durationDays ? parseInt(durationDays) : null,
+        packageType,
+        basePrice: basePrice ? parseFloat(basePrice) : null,
+        bestSeason,
+        images,
+        rating: rating ? parseFloat(rating) : 0,
+        views: views ? parseInt(views) : 0,
+        popularity: popularity ? parseInt(popularity) : 0,
+        isTrending: !!isTrending,
+        maxPeople: maxPeople ? parseInt(maxPeople) : null,
         startDate: new Date(startDate),
         endDate: new Date(endDate),
         coverImage,
         isPublic: !!isPublic,
+        status: status || "PLANNING",
       },
     });
     res.status(201).json(trip);
@@ -58,7 +71,7 @@ exports.createTrip = async (req, res) => {
 // PATCH /api/trips/:id
 exports.updateTrip = async (req, res) => {
   try {
-    const { title, description, startDate, endDate, coverImage, isPublic, status } = req.body;
+    const { title, description, startDate, endDate, coverImage, isPublic, status, startingLocation, destination, durationDays, packageType, basePrice, bestSeason, images, rating, views, popularity, isTrending, maxPeople } = req.body;
     const trip = await prisma.trip.findFirst({ where: { id: req.params.id, userId: req.user.id } });
     if (!trip) return res.status(404).json({ error: 'Trip not found' });
 
@@ -67,6 +80,18 @@ exports.updateTrip = async (req, res) => {
       data: {
         ...(title && { title }),
         ...(description !== undefined && { description }),
+        ...(startingLocation !== undefined && { startingLocation }),
+        ...(destination !== undefined && { destination }),
+        ...(durationDays !== undefined && { durationDays: parseInt(durationDays) }),
+        ...(packageType !== undefined && { packageType }),
+        ...(basePrice !== undefined && { basePrice: parseFloat(basePrice) }),
+        ...(bestSeason !== undefined && { bestSeason }),
+        ...(images !== undefined && { images }),
+        ...(rating !== undefined && { rating: parseFloat(rating) }),
+        ...(views !== undefined && { views: parseInt(views) }),
+        ...(popularity !== undefined && { popularity: parseInt(popularity) }),
+        ...(isTrending !== undefined && { isTrending: !!isTrending }),
+        ...(maxPeople !== undefined && { maxPeople: parseInt(maxPeople) }),
         ...(startDate && { startDate: new Date(startDate) }),
         ...(endDate && { endDate: new Date(endDate) }),
         ...(coverImage !== undefined && { coverImage }),

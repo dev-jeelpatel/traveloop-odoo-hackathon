@@ -34,17 +34,29 @@ model User {
 
 // ─── Trips ────────────────────────────────────────────────────────────────────
 model Trip {
-  id          String   @id @default(uuid())
-  userId      String
-  title       String
-  description String?
-  coverImage  String?
-  startDate   DateTime
-  endDate     DateTime
-  isPublic    Boolean  @default(false)
-  status      String   @default("PLANNING")    // PLANNING|CONFIRMED|ONGOING|COMPLETED|CANCELLED
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id               String   @id @default(uuid())
+  userId           String
+  title            String
+  description      String?
+  startingLocation String?
+  destination      String?
+  durationDays     Int?
+  packageType      String?  // LUXURY|BUDGET|ADVENTURE|FAMILY|HONEYMOON|CULTURAL
+  basePrice        Float?
+  bestSeason       String?
+  coverImage       String?
+  images           String?  // comma-separated URLs or JSON
+  rating           Float    @default(0.0)
+  views            Int      @default(0)
+  popularity       Int      @default(0)
+  isTrending       Boolean  @default(false)
+  maxPeople        Int?
+  startDate        DateTime
+  endDate          DateTime
+  isPublic         Boolean  @default(false)
+  status           String   @default("PLANNING")    // PLANNING|CONFIRMED|ONGOING|COMPLETED|CANCELLED|AVAILABLE
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
 
   user            User             @relation(fields: [userId], references: [id], onDelete: Cascade)
   stops           Stop[]

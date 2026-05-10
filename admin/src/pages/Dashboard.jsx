@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import {
   AreaChart, Area, PieChart, Pie, Cell, BarChart, Bar,
@@ -5,8 +6,9 @@ import {
 } from 'recharts';
 import {
   Map, Users, TrendingUp, Globe, Activity,
-  ArrowUpRight, ArrowDownRight, Compass, Star
+  ArrowUpRight, ArrowDownRight, Compass, Star, Loader
 } from 'lucide-react';
+import api from '../api/axios';
 
 const AREA_DATA = [
   {m:'Jan',users:820,trips:340,cities:120},{m:'Feb',users:950,trips:420,cities:145},
@@ -28,24 +30,42 @@ const TOP_DEST = [
   {name:'Dubai, UAE',searches:7200,trend:'-3%',up:false},
   {name:'Tokyo, Japan',searches:6900,trend:'+22%',up:true},
 ];
-const STATS = [
-  {label:'Total Users',value:'12,840',change:'+18%',up:true,icon:Users,color:'#2E7D6B'},
-  {label:'Active Trips',value:'3,420',change:'+12%',up:true,icon:Map,color:'#0369A1'},
-  {label:'Cities Listed',value:'248',change:'+8',up:true,icon:Globe,color:'#7C3AED'},
-  {label:'Activities',value:'1,640',change:'+5%',up:true,icon:Activity,color:'#D97706'},
-];
-const RECENT_TRIPS = [
-  {title:'Bali 7 Days',user:'Areen S.',status:'ACTIVE',date:'May 10'},
-  {title:'Swiss Alps',user:'Priya M.',status:'PLANNED',date:'May 9'},
-  {title:'Goa Weekend',user:'Rahul K.',status:'COMPLETED',date:'May 8'},
-  {title:'Rajasthan Tour',user:'Meera J.',status:'ACTIVE',date:'May 7'},
-];
 
-const STATUS_COLORS = { ACTIVE:'badge-sage', PLANNED:'badge-blue', COMPLETED:'badge-teal' };
+const STATUS_COLORS = { ACTIVE:'badge-sage', ONGOING:'badge-sage', AVAILABLE:'badge-teal', PLANNED:'badge-blue', PLANNING: 'badge-blue', COMPLETED:'badge-teal', CANCELLED:'badge-amber' };
 
 const card = { background:'rgba(255,255,255,0.55)', backdropFilter:'blur(18px)', WebkitBackdropFilter:'blur(18px)', border:'1px solid rgba(255,255,255,0.25)', boxShadow:'0 8px 32px rgba(31,41,55,0.08)', borderRadius:24 };
 
 export default function Dashboard() {
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchDashboardData = async () => {
+      try {
+        const res = await api.get('/analytics/dashboard');
+        setData(res.data);
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchDashboardData();
+  }, []);
+
+  if (loading) {
+    return <div style={{textAlign:"center", padding:"3rem"}}><Loader className="spin" size={24} color="#2E7D6B" style={{margin:"0 auto"}}/></div>;
+  }
+
+  const STATS = [
+    {label:'Total Users',value: data?.stats?.totalUsers || 0,change:'+18%',up:true,icon:Users,color:'#2E7D6B'},
+    {label:'Active Trips',value: data?.stats?.activeTrips || 0,change:'+12%',up:true,icon:Map,color:'#0369A1'},
+    {label:'Cities Listed',value: data?.stats?.citiesListed || 0,change:'+8',up:true,icon:Globe,color:'#7C3AED'},
+    {label:'Activities',value: data?.stats?.activitiesCount || 0,change:'+5%',up:true,icon:Activity,color:'#D97706'},
+  ];
+
+  const RECENT_TRIPS = data?.recentTrips || [];
+
   return (
     <div style={{ display:'flex', flexDirection:'column', gap:'1.5rem' }}>
       {/* Header */}
@@ -74,7 +94,7 @@ export default function Dashboard() {
                   {up ? <ArrowUpRight size={12}/> : <ArrowDownRight size={12}/>} {change}
                 </span>
               </div>
-              <p style={{ fontSize:'1.875rem', fontWeight:800, fontFamily:'Poppins,sans-serif', color:'#1F2937' }}>{value}</p>
+              <p style={{ fontSize:'1.875rem', fontWeight:800, fontFamily:'Poppins,sans-serif', color:'#1F2937' }}>{value.toLocaleString()}</p>
               <p style={{ fontSize:'0.8125rem', color:'#6B7280', marginTop:'0.15rem' }}>{label}</p>
             </div>
           </motion.div>
@@ -82,7 +102,7 @@ export default function Dashboard() {
       </div>
 
       {/* Charts row */}
-      <div style={{ display:'grid', gridTemplateColumns:'2fr 1fr', gap:'1rem' }}>
+      <div className="rg-2">
         {/* Area chart */}
         <motion.div style={card} initial={{ opacity:0, y:20 }} animate={{ opacity:1, y:0 }} transition={{ delay:0.2 }}>
           <div style={{ padding:'1.5rem' }}>
@@ -140,7 +160,7 @@ export default function Dashboard() {
       </div>
 
       {/* Bottom row */}
-      <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:'1rem' }}>
+      <div className="rg-2-equal">
         {/* Top destinations */}
         <motion.div style={card} initial={{ opacity:0, y:20 }} animate={{ opacity:1, y:0 }} transition={{ delay:0.3 }}>
           <div style={{ padding:'1.5rem' }}>
@@ -173,16 +193,18 @@ export default function Dashboard() {
               <p className="section-title">Recent Trips</p>
             </div>
             <div style={{ display:'flex', flexDirection:'column', gap:'0.625rem' }}>
-              {RECENT_TRIPS.map((t, i) => (
-                <div key={t.title} style={{ display:'flex', alignItems:'center', gap:'0.75rem', padding:'0.625rem 0.75rem', borderRadius:14, background: i%2===0?'rgba(124,154,126,0.05)':'transparent' }}>
+              {RECENT_TRIPS.length > 0 ? RECENT_TRIPS.map((t, i) => (
+                <div key={i} style={{ display:'flex', alignItems:'center', gap:'0.75rem', padding:'0.625rem 0.75rem', borderRadius:14, background: i%2===0?'rgba(124,154,126,0.05)':'transparent' }}>
                   <div style={{ width:36, height:36, borderRadius:12, flexShrink:0 }} className={`mesh-${(i%6)+1}`} />
                   <div style={{ flex:1, minWidth:0 }}>
                     <p style={{ fontSize:'0.875rem', fontWeight:600, color:'#1F2937', overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap' }}>{t.title}</p>
                     <p style={{ fontSize:'0.75rem', color:'#9CA3AF' }}>by {t.user} · {t.date}</p>
                   </div>
-                  <span className={`badge ${STATUS_COLORS[t.status]}`}>{t.status}</span>
+                  <span className={`badge ${STATUS_COLORS[t.status] || 'badge-cream'}`}>{t.status}</span>
                 </div>
-              ))}
+              )) : (
+                <p style={{ fontSize:'0.875rem', color:'#9CA3AF', textAlign:'center', padding:'1rem 0' }}>No recent trips</p>
+              )}
             </div>
           </div>
         </motion.div>

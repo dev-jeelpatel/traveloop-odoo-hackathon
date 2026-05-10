@@ -19,7 +19,7 @@ export default function ManageUsers() {
         <div><h1 className="page-title">User Management</h1><p className="page-subtitle">{USERS.length} registered users</p></div>
         <motion.button whileHover={{scale:1.02,y:-1}} className="btn btn-secondary"><Download size={15}/>Export CSV</motion.button>
       </motion.div>
-      <div style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:"0.875rem"}}>
+      <div className="rg-4">
         {STATS.map((s,i)=>(
           <motion.div key={s.label} style={{...card,padding:"1.25rem"}} initial={{opacity:0,y:16}} animate={{opacity:1,y:0}} transition={{delay:i*0.07}}>
             <div style={{display:"flex",alignItems:"center",gap:"0.75rem"}}><div style={{width:36,height:36,borderRadius:12,background:s.color+"18",display:"flex",alignItems:"center",justifyContent:"center"}}><s.icon size={17} color={s.color}/></div><div><p style={{fontSize:"1.5rem",fontWeight:800,fontFamily:"Poppins,sans-serif",color:"#1F2937"}}>{s.value}</p><p style={{fontSize:"0.75rem",color:"#6B7280"}}>{s.label}</p></div></div>
@@ -32,7 +32,7 @@ export default function ManageUsers() {
             <div style={{position:"relative",flex:1,minWidth:200}}><Search size={15} style={{position:"absolute",left:14,top:"50%",transform:"translateY(-50%)",color:"#9CA3AF"}}/><input className="input" placeholder="Search users..." style={{paddingLeft:40}} value={q} onChange={e=>setQ(e.target.value)}/></div>
             <select className="input" style={{width:"auto"}} value={roleF} onChange={e=>setRoleF(e.target.value)}><option>All</option><option>USER</option><option>ADMIN</option></select>
           </div>
-          <div style={{overflowX:"auto"}}>
+          <div className="table-scroll">
             <table className="admin-table">
               <thead><tr><th>User</th><th>Email</th><th>Role</th><th>Trips</th><th>City</th><th>Joined</th><th>Status</th><th>Actions</th></tr></thead>
               <tbody>

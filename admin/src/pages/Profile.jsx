@@ -19,7 +19,7 @@ export default function Profile() {
 
       {saved&&<motion.div initial={{opacity:0,y:-8}} animate={{opacity:1,y:0}} style={{padding:"0.875rem 1.25rem",borderRadius:16,background:"rgba(34,197,94,0.1)",border:"1px solid rgba(34,197,94,0.3)",color:"#166534",fontWeight:600,fontSize:"0.875rem"}}>Profile updated successfully!</motion.div>}
 
-      <div style={{display:"grid",gridTemplateColumns:"300px 1fr",gap:"1.5rem"}}>
+      <div className="rg-checklist">
         {/* Left panel */}
         <div style={{display:"flex",flexDirection:"column",gap:"1rem"}}>
           <motion.div style={card} initial={{opacity:0,y:20}} animate={{opacity:1,y:0}} transition={{delay:0.1}}>
@@ -69,7 +69,7 @@ export default function Profile() {
                   <Edit3 size={13}/>{editing?"Cancel":"Edit"}
                 </button>
               </div>
-              <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:"1rem"}}>
+              <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(200px,1fr))",gap:"1rem"}}>
                 {[
                   {label:"Full Name",key:"name",icon:User},
                   {label:"Email Address",key:"email",icon:Mail},
@@ -103,7 +103,7 @@ export default function Profile() {
           <motion.div style={card} initial={{opacity:0,y:20}} animate={{opacity:1,y:0}} transition={{delay:0.25}}>
             <div style={{padding:"1.5rem"}}>
               <p className="section-title" style={{marginBottom:"1rem"}}>Change Password</p>
-              <div style={{display:"grid",gridTemplateColumns:"1fr 1fr 1fr",gap:"1rem"}}>
+              <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(180px,1fr))",gap:"1rem"}}>
                 {["Current Password","New Password","Confirm New"].map(l=>(
                   <div key={l}><label className="input-label">{l}</label><input className="input" type="password" placeholder="••••••••"/></div>
                 ))}

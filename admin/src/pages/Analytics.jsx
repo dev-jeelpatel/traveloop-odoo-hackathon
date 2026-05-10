@@ -9,7 +9,7 @@ export default function Analytics() {
   return(
     <div style={{display:"flex",flexDirection:"column",gap:"1.5rem"}}>
       <motion.div initial={{opacity:0,y:-12}} animate={{opacity:1,y:0}}><h1 className="page-title">Analytics & Trends</h1><p className="page-subtitle">Platform performance and travel behavior insights</p></motion.div>
-      <div style={{display:"grid",gridTemplateColumns:"2fr 1fr",gap:"1rem"}}>
+      <div className="rg-2">
         <motion.div style={card} initial={{opacity:0,y:20}} animate={{opacity:1,y:0}} transition={{delay:0.1}}>
           <div style={{padding:"1.5rem"}}>
             <p className="section-title" style={{marginBottom:4}}>Search vs Bookings vs Users</p>
@@ -47,7 +47,7 @@ export default function Analytics() {
           </div>
         </motion.div>
       </div>
-      <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:"1rem"}}>
+      <div className="rg-2-equal">
         <motion.div style={card} initial={{opacity:0,y:20}} animate={{opacity:1,y:0}} transition={{delay:0.2}}>
           <div style={{padding:"1.5rem"}}>
             <p className="section-title" style={{marginBottom:4}}>Seasonal Activity Mix</p>

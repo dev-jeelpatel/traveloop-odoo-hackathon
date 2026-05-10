@@ -156,7 +156,7 @@ export default function AdminLayout() {
       <div style={{ flex:1, display:'flex', flexDirection:'column', minWidth:0, overflow:'hidden' }}>
         {/* Topbar */}
         <header style={{
-          display:'flex', alignItems:'center', gap:'1rem', padding:'0.75rem 1.5rem',
+          display:'flex', alignItems:'center', gap:'0.75rem', padding:'0.75rem 1rem',
           background:'rgba(247,246,242,0.92)', backdropFilter:'blur(20px)',
           WebkitBackdropFilter:'blur(20px)', borderBottom:'1px solid rgba(124,154,126,0.1)',
           position:'sticky', top:0, zIndex:30,
@@ -173,8 +173,8 @@ export default function AdminLayout() {
           </div>
 
           <div style={{ marginLeft:'auto', display:'flex', alignItems:'center', gap:'0.5rem' }}>
-            <motion.button whileHover={{ scale:1.02 }} className="btn btn-primary" style={{ padding:'0.5rem 1rem', fontSize:'0.75rem', borderRadius:12 }}>
-              <PlusCircle size={14} /> Quick Add
+            <motion.button whileHover={{ scale:1.02 }} className="btn btn-primary admin-quick-add" style={{ padding:'0.5rem 1rem', fontSize:'0.75rem', borderRadius:12 }}>
+              <PlusCircle size={14} /> <span className="quick-add-label">Quick Add</span>
             </motion.button>
             <button className="btn-icon" style={{ position:'relative' }}>
               <Bell size={16} />
@@ -185,7 +185,7 @@ export default function AdminLayout() {
 
         {/* Page content */}
         <div style={{ flex:1, overflowY:'auto' }}>
-          <div style={{ maxWidth:1280, margin:'0 auto', padding:'1.5rem 2rem' }}>
+          <div className="admin-page-wrap">
             <Outlet />
           </div>
         </div>

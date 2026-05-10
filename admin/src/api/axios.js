@@ -14,7 +14,7 @@ api.interceptors.response.use(
     if (err.response?.status === 401) {
       localStorage.removeItem('traveloop_admin_token');
       localStorage.removeItem('traveloop_admin');
-      window.location.href = '/login';
+      window.location.href = '/admin/login';
     }
     return Promise.reject(err);
   }
