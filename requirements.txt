@@ -1,0 +1,90 @@
+# ╔══════════════════════════════════════════════════════════════════════════════╗
+# ║               TRAVELOOP — Dependency Reference (requirements.txt)           ║
+# ║  Node.js projects use package.json, but this file lists every dependency    ║
+# ║  for quick reference, onboarding, and documentation purposes.               ║
+# ╚══════════════════════════════════════════════════════════════════════════════╝
+#
+# Install everything:
+#   cd backend  → npm install
+#   cd frontend → npm install
+#
+# ─────────────────────────────────────────────────────────────────────────────
+# RUNTIME REQUIREMENTS
+# ─────────────────────────────────────────────────────────────────────────────
+# Node.js  >= 18.0.0
+# npm      >= 9.0.0
+#
+# ─────────────────────────────────────────────────────────────────────────────
+# BACKEND  (backend/package.json)
+# ─────────────────────────────────────────────────────────────────────────────
+
+[backend:dependencies]
+@prisma/client==5.14.0          # Prisma ORM client (type-safe DB access)
+bcryptjs==2.4.3                 # Password hashing (bcrypt)
+cors==2.8.5                     # Express CORS middleware
+dotenv==16.4.5                  # .env file loader
+express==4.19.2                 # HTTP server framework
+jsonwebtoken==9.0.2             # JWT creation & verification
+nodemailer==6.9.14              # Email sending via Gmail SMTP
+uuid==11.0.0                    # UUID v4 generation
+
+[backend:devDependencies]
+nodemon==3.1.4                  # Auto-restart on file changes
+prisma==5.14.0                  # Prisma CLI (migrations, studio, generate)
+
+# ─────────────────────────────────────────────────────────────────────────────
+# FRONTEND  (frontend/package.json)
+# ─────────────────────────────────────────────────────────────────────────────
+
+[frontend:dependencies]
+react==19.0.0                   # UI library
+react-dom==19.0.0               # React DOM renderer
+react-router-dom==7.6.0         # Client-side routing (v6 API)
+axios==1.9.0                    # HTTP client (API calls)
+recharts==2.15.3                # Chart library (pie, bar, line)
+leaflet==1.9.4                  # Interactive maps (OpenStreetMap)
+react-leaflet==5.0.0            # React bindings for Leaflet
+lucide-react==0.511.0           # Icon library
+date-fns==4.1.0                 # Date formatting & manipulation
+
+# Radix UI headless components (unstyled, accessible)
+@radix-ui/react-dialog==1.1.14
+@radix-ui/react-dropdown-menu==2.1.15
+@radix-ui/react-select==2.2.5
+@radix-ui/react-toast==1.2.14
+@radix-ui/react-progress==1.1.7
+@radix-ui/react-tabs==1.1.12
+
+[frontend:devDependencies]
+vite==6.3.5                     # Build tool & dev server
+@vitejs/plugin-react==4.4.1     # Vite plugin for React (Babel/SWC)
+tailwindcss==3.4.1              # Utility-first CSS framework
+postcss==8.4.47                 # CSS post-processor (required by Tailwind)
+autoprefixer==10.4.20           # PostCSS plugin for vendor prefixes
+
+# ─────────────────────────────────────────────────────────────────────────────
+# SERVICES & THIRD-PARTY APIs  (all FREE)
+# ─────────────────────────────────────────────────────────────────────────────
+# Database   : SQLite (local dev) | MySQL via Railway.app (production)
+# Maps       : OpenStreetMap (no API key needed — via Leaflet.js)
+# Email      : Gmail SMTP via Nodemailer (free with App Password)
+# Fonts      : Google Fonts — Inter + Outfit (CDN, free)
+# Hosting FE : Vercel (free tier)
+# Hosting BE : Render.com (free tier — 750 hrs/month)
+# CI/CD      : GitHub Actions (free for public repos)
+
+# ─────────────────────────────────────────────────────────────────────────────
+# QUICK SETUP COMMANDS
+# ─────────────────────────────────────────────────────────────────────────────
+# 1. Backend:
+#    cd backend
+#    npm install
+#    cp .env.example .env       # then edit .env with your values
+#    npx prisma db push         # creates SQLite DB
+#    node prisma/seed.js        # seeds 10 cities + 50 activities
+#    npm run dev                # starts API on http://localhost:5000
+#
+# 2. Frontend:
+#    cd frontend
+#    npm install
+#    npm run dev                # starts UI on http://localhost:5173

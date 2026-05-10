@@ -1,0 +1,208 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;500;600;700;800;900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── Base ──────────────────────────────────────────────────────────────────── */
+@layer base {
+  html { scroll-behavior: smooth; }
+  body {
+    @apply bg-dark-900 text-white font-sans antialiased min-h-screen;
+    background: radial-gradient(ellipse at top left, rgba(99,102,241,0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at bottom right, rgba(14,165,233,0.1) 0%, transparent 50%),
+                #0a0a0f;
+  }
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { @apply bg-dark-800; }
+  ::-webkit-scrollbar-thumb { @apply bg-primary-600 rounded-full; }
+}
+
+/* ── Component Base Styles (no hover variants in @apply) ─────────────────── */
+@layer components {
+  /* Glassmorphism card — static styles only */
+  .glass-card {
+    @apply backdrop-blur-xl bg-white/5 border border-white/10 rounded-2xl shadow-2xl;
+  }
+
+  /* Buttons */
+  .btn-primary {
+    @apply inline-flex items-center gap-2 text-white font-semibold px-6 py-3 rounded-xl
+           shadow-lg transition-all duration-200
+           disabled:opacity-50 disabled:cursor-not-allowed;
+    background: linear-gradient(135deg, #4f46e5, #6366f1);
+    box-shadow: 0 8px 24px rgba(99,102,241,0.3);
+  }
+  .btn-secondary {
+    @apply inline-flex items-center gap-2 bg-white/10 text-white font-medium px-6 py-3 rounded-xl
+           border border-white/20 backdrop-blur-sm transition-all duration-200
+           disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+  .btn-danger {
+    @apply inline-flex items-center gap-2 text-white font-semibold px-6 py-3 rounded-xl
+           shadow-lg transition-all duration-200;
+    background: linear-gradient(135deg, #e11d48, #f43f5e);
+    box-shadow: 0 8px 24px rgba(244,63,94,0.3);
+  }
+  .btn-ghost {
+    @apply inline-flex items-center gap-2 text-white/70 font-medium px-4 py-2 rounded-xl
+           transition-all duration-200;
+  }
+  .btn-icon {
+    @apply inline-flex items-center justify-center w-10 h-10 rounded-xl bg-white/10
+           border border-white/10 text-white/70 transition-all duration-200;
+  }
+
+  /* Inputs */
+  .input {
+    @apply w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white
+           placeholder-white/30 outline-none transition-all duration-200;
+  }
+  .input-label {
+    @apply block text-sm font-medium text-white/70 mb-1.5;
+  }
+
+  /* Badges */
+  .badge {
+    @apply inline-flex items-center gap-1 text-xs font-semibold px-2.5 py-1 rounded-full;
+  }
+  .badge-primary {
+    background: rgba(99,102,241,0.2);
+    color: #a5b4fc;
+    border: 1px solid rgba(99,102,241,0.3);
+  }
+  .badge-ocean {
+    background: rgba(14,165,233,0.2);
+    color: #7dd3fc;
+    border: 1px solid rgba(14,165,233,0.3);
+  }
+  .badge-coral {
+    background: rgba(244,63,94,0.2);
+    color: #fda4af;
+    border: 1px solid rgba(244,63,94,0.3);
+  }
+  .badge-sage {
+    background: rgba(34,197,94,0.2);
+    color: #86efac;
+    border: 1px solid rgba(34,197,94,0.3);
+  }
+  .badge-amber {
+    background: rgba(245,158,11,0.2);
+    color: #fcd34d;
+    border: 1px solid rgba(245,158,11,0.3);
+  }
+
+  /* Page header */
+  .page-header { @apply mb-8; }
+  .page-title {
+    @apply text-3xl font-bold font-display;
+    background: linear-gradient(135deg, #fff 40%, rgba(255,255,255,0.6));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .page-subtitle { @apply text-white/50 mt-1; }
+
+  /* Section title */
+  .section-title { @apply text-lg font-semibold text-white/90 mb-4; }
+
+  /* Divider */
+  .divider { @apply border-t border-white/10 my-6; }
+
+  /* Trip card gradient meshes */
+  .trip-card-mesh-1 { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+  .trip-card-mesh-2 { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); }
+  .trip-card-mesh-3 { background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); }
+  .trip-card-mesh-4 { background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); }
+  .trip-card-mesh-5 { background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); }
+  .trip-card-mesh-6 { background: linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%); }
+
+  /* Sidebar */
+  .sidebar-link {
+    @apply flex items-center gap-3 px-4 py-3 rounded-xl text-white/60 font-medium
+           transition-all duration-200;
+  }
+  .sidebar-link.active {
+    background: rgba(99,102,241,0.15);
+    color: #a5b4fc;
+    border: 1px solid rgba(99,102,241,0.3);
+  }
+
+  /* Skeleton loader */
+  .skeleton { @apply animate-pulse bg-white/10 rounded-lg; }
+
+  /* Spinner */
+  .spinner { @apply w-5 h-5 border-2 border-white/20 border-t-white rounded-full animate-spin; }
+}
+
+/* ── Hover effects via plain CSS (not @apply with hover:) ─────────────────── */
+.glass-card-hover {
+  backdrop-filter: blur(20px);
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 1rem;
+  box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);
+  transition: all 0.3s ease;
+}
+.glass-card-hover:hover {
+  background: rgba(255,255,255,0.07);
+  border-color: rgba(255,255,255,0.18);
+  transform: translateY(-4px);
+  box-shadow: 0 30px 60px -12px rgba(99,102,241,0.15);
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: linear-gradient(135deg, #6366f1, #818cf8);
+  box-shadow: 0 12px 28px rgba(99,102,241,0.45);
+  transform: translateY(-2px);
+}
+.btn-primary:active:not(:disabled) { transform: translateY(0); box-shadow: none; }
+
+.btn-secondary:hover:not(:disabled) {
+  background: rgba(255,255,255,0.15);
+  border-color: rgba(255,255,255,0.3);
+  transform: translateY(-2px);
+}
+.btn-secondary:active:not(:disabled) { transform: translateY(0); }
+
+.btn-danger:hover {
+  background: linear-gradient(135deg, #f43f5e, #fb7185);
+  box-shadow: 0 12px 28px rgba(244,63,94,0.45);
+  transform: translateY(-2px);
+}
+
+.btn-ghost:hover { background: rgba(255,255,255,0.08); color: #fff; }
+
+.btn-icon:hover { background: rgba(255,255,255,0.18); color: #fff; border-color: rgba(255,255,255,0.2); }
+
+.sidebar-link:hover { background: rgba(255,255,255,0.08); color: #fff; }
+
+.input:focus {
+  border-color: #6366f1;
+  background: rgba(255,255,255,0.08);
+  box-shadow: 0 0 0 3px rgba(99,102,241,0.2);
+}
+
+/* ── Map ────────────────────────────────────────────────────────────────────── */
+.leaflet-container {
+  background: #12121c !important;
+  border-radius: 16px;
+  height: 100%;
+  width: 100%;
+}
+.leaflet-tile { filter: brightness(0.7) saturate(1.2) hue-rotate(10deg); }
+.leaflet-popup-content-wrapper {
+  background: rgba(26,26,46,0.95) !important;
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255,255,255,0.1) !important;
+  border-radius: 12px !important;
+  color: white !important;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.5) !important;
+}
+.leaflet-popup-tip { background: rgba(26,26,46,0.95) !important; }
+.leaflet-control-zoom { display: none; }
+
+/* ── Recharts ───────────────────────────────────────────────────────────────── */
+.recharts-cartesian-grid-horizontal line,
+.recharts-cartesian-grid-vertical line { stroke: rgba(255,255,255,0.05); }
+.recharts-text { fill: rgba(255,255,255,0.5) !important; font-size: 12px; }
