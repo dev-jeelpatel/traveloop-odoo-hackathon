@@ -41,10 +41,10 @@ export default function SignupPage() {
           {/* Mobile logo */}
           <div className="lg:hidden text-center mb-8">
             <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl mb-3"
-              style={{ background: 'linear-gradient(135deg, #0F766E, #14B8A6)' }}>
+              style={{ background: 'linear-gradient(135deg, #2E7D6B, #3D9B85)' }}>
               <Compass className="w-7 h-7 text-white" />
             </div>
-            <h1 className="text-2xl font-bold font-display text-teal-700">Traveloop</h1>
+            <h1 className="text-2xl font-bold font-display text-[#2E7D6B]">Traveloop</h1>
           </div>
 
           <h1 className="text-3xl font-bold font-display text-ink-900 mb-1">Start exploring 🌍</h1>
@@ -82,7 +82,7 @@ export default function SignupPage() {
                     placeholder="Min. 8 characters" className="input pl-11 pr-11"
                     value={form.password} onChange={update('password')} required />
                   <button type="button" onClick={() => setShowPass(!showPass)}
-                    className="absolute right-4 top-1/2 -translate-y-1/2 text-ink-300 hover:text-teal-600 transition-colors">
+                    className="absolute right-4 top-1/2 -translate-y-1/2 text-ink-300 hover:text-[#2E7D6B] transition-colors">
                     {showPass ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                   </button>
                 </div>
@@ -106,7 +106,7 @@ export default function SignupPage() {
             <div className="divider" />
             <p className="text-center text-ink-300 text-sm">
               Already have an account?{' '}
-              <Link to="/login" className="text-teal-600 hover:text-teal-700 font-semibold transition-colors">Sign in →</Link>
+              <Link to="/login" className="text-[#2E7D6B] hover:text-[#2E7D6B] font-semibold transition-colors">Sign in →</Link>
             </p>
           </div>
         </div>
