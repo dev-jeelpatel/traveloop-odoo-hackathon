@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import api from '../../lib/api';
-import { Users, Map, Globe, Activity, TrendingUp, ArrowUp, ArrowDown, Star, PackageCheck } from 'lucide-react';
+import { Users, Map, Globe, Activity, TrendingUp, ArrowUp, ArrowDown, Star, PackageCheck, ArrowRight } from 'lucide-react';
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, BarChart, Bar } from 'recharts';
 
 const fadeUp = { hidden:{opacity:0,y:16}, show:{opacity:1,y:0,transition:{duration:0.4}} };
@@ -114,7 +114,7 @@ export default function AdminDashboard() {
         <motion.div variants={fadeUp} className="rounded-3xl p-6" style={GLASS}>
           <div className="flex items-center justify-between mb-4">
             <h3 className="font-bold font-display" style={{ color:'#1F2937' }}>Recent Trips</h3>
-            <Link to="/admin/trips" className="text-xs font-semibold" style={{ color:'#2E7D6B' }}>View all →</Link>
+            <Link to="/admin/trips" className="text-xs font-semibold inline-flex items-center gap-1" style={{ color:'#2E7D6B' }}>View all <ArrowRight className="w-3 h-3" /></Link>
           </div>
           <div className="space-y-3">
             {(recent.length ? recent : [{id:1,title:'Goa Getaway',status:'PLANNING'},{id:2,title:'Swiss Alps',status:'CONFIRMED'},{id:3,title:'Bali Dreams',status:'COMPLETED'}]).map((t,i) => (

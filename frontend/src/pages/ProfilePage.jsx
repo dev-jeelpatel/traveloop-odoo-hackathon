@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import api from '../lib/api';
-import { User, Mail, Shield, Calendar, Save, Lock, Eye, EyeOff, Loader2, Camera } from 'lucide-react';
+import { User, Mail, Shield, Calendar, Save, Lock, Eye, EyeOff, Loader2, Camera, CheckCircle2, AlertTriangle } from 'lucide-react';
 import { format } from 'date-fns';
 
 export default function ProfilePage() {
@@ -71,8 +71,8 @@ export default function ProfilePage() {
           <h2 className="text-xl font-bold text-ink-900">{profile?.name}</h2>
           <p className="text-ink-300 text-sm">{profile?.email}</p>
           <div className="flex items-center gap-2 mt-2">
-            <span className={`badge ${profile?.isEmailVerified ? 'badge-sage' : 'badge-amber'}`}>
-              {profile?.isEmailVerified ? '✓ Verified' : '⚠ Unverified'}
+            <span className={`badge ${profile?.isEmailVerified ? 'badge-sage' : 'badge-amber'} flex items-center gap-1`}>
+              {profile?.isEmailVerified ? <><CheckCircle2 className="w-3 h-3" /> Verified</> : <><AlertTriangle className="w-3 h-3" /> Unverified</>}
             </span>
             <span className="badge badge-teal">{profile?.role}</span>
           </div>
@@ -81,10 +81,15 @@ export default function ProfilePage() {
 
       {/* Tabs */}
       <div className="flex gap-1 card p-1">
-        {['profile', 'security'].map(tab => (
-          <button key={tab} onClick={() => setActiveTab(tab)}
-            className={`flex-1 py-2.5 rounded-xl text-sm font-medium capitalize transition-all duration-200 ${activeTab === tab ? 'bg-teal-700 text-ink-900 shadow-lg' : 'text-ink-300 hover:text-ink-900'}`}>
-            {tab === 'profile' ? '👤 Profile' : '🔒 Security'}
+        {[
+          { key: 'profile', icon: User, label: 'Profile' },
+          { key: 'security', icon: Shield, label: 'Security' }
+        ].map(({ key, icon: Icon, label }) => (
+          <button key={key} onClick={() => setActiveTab(key)}
+            className={`flex-1 py-2.5 rounded-xl text-sm font-medium capitalize transition-all duration-200 flex items-center justify-center gap-2 ${
+              activeTab === key ? 'bg-teal-700 text-ink-900 shadow-lg' : 'text-ink-300 hover:text-ink-900'
+            }`}>
+            <Icon className="w-4 h-4" />{label}
           </button>
         ))}
       </div>

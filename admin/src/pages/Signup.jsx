@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import useAuthStore from '../store/authStore';
-import { Shield, Mail, Lock, User, Eye, EyeOff, Loader, CheckCircle2 } from 'lucide-react';
+import { Shield, Mail, Lock, User, Eye, EyeOff, Loader, CheckCircle2, AlertTriangle, ArrowRight } from 'lucide-react';
 
 export default function Signup() {
   const { signup } = useAuthStore();
@@ -60,8 +60,8 @@ export default function Signup() {
             <form onSubmit={submit} style={{ display:'flex', flexDirection:'column', gap:'1rem' }}>
               {error && (
                 <motion.div initial={{ opacity:0, y:-8 }} animate={{ opacity:1, y:0 }}
-                  style={{ padding:'0.75rem 1rem', borderRadius:12, background:'#FEE2E2', border:'1px solid #FECACA', color:'#991B1B', fontSize:'0.875rem' }}>
-                  ⚠️ {error}
+                  style={{ padding:'0.75rem 1rem', borderRadius:12, background:'#FEE2E2', border:'1px solid #FECACA', color:'#991B1B', fontSize:'0.875rem', display:'flex', alignItems:'center', gap:'0.5rem' }}>
+                  <AlertTriangle size={16} /> {error}
                 </motion.div>
               )}
               {/* Name */}
@@ -128,7 +128,7 @@ export default function Signup() {
             <div className="divider" />
             <p style={{ textAlign:'center', fontSize:'0.875rem', color:'#6B7280' }}>
               Already have an account?{' '}
-              <Link to="/login" style={{ color:'#2E7D6B', fontWeight:600, textDecoration:'none' }}>Sign in →</Link>
+              <Link to="/login" style={{ color:'#2E7D6B', fontWeight:600, textDecoration:'none', display:'inline-flex', alignItems:'center', gap:'0.25rem' }}>Sign in <ArrowRight size={14} /></Link>
             </p>
           </div>
         )}

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import api from '../lib/api';
-import { PlusCircle, Map, Search, Trash2, Calendar, MapPin } from 'lucide-react';
+import { PlusCircle, Map, Search, Trash2, Calendar, MapPin, ArrowRight } from 'lucide-react';
 import { format } from 'date-fns';
 
 const MESHES = ['trip-card-mesh-1','trip-card-mesh-2','trip-card-mesh-3','trip-card-mesh-4','trip-card-mesh-5','trip-card-mesh-6'];
@@ -105,8 +105,8 @@ export default function MyTrips() {
                   </div>
                 )}
                 <div className="flex items-center justify-between mt-3">
-                  <Link to={`/trips/${trip.id}/itinerary`} className="text-xs text-teal-600 hover:text-teal-500 font-medium transition-colors">
-                    View Itinerary →
+                  <Link to={`/trips/${trip.id}/itinerary`} className="text-xs text-teal-600 hover:text-teal-500 font-medium transition-colors inline-flex items-center gap-1">
+                    View Itinerary <ArrowRight className="w-3 h-3" />
                   </Link>
                   <button onClick={() => handleDelete(trip.id)} disabled={deleting === trip.id}
                     className="btn-icon w-7 h-7 text-coral-500/70 hover:text-red-500 hover:bg-coral-500/10">

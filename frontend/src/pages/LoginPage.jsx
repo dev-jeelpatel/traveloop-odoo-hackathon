@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { motion } from 'framer-motion';
-import { Compass, Mail, Lock, Eye, EyeOff, Loader2, MapPin, Calendar, Globe } from 'lucide-react';
+import { Compass, Mail, Lock, Eye, EyeOff, Loader2, MapPin, Calendar, Globe, AlertTriangle, ArrowRight, Hand } from 'lucide-react';
 
 const GLASS = { background:'rgba(255,255,255,0.7)', backdropFilter:'blur(18px)', WebkitBackdropFilter:'blur(18px)', border:'1px solid rgba(124,154,126,0.2)', boxShadow:'0 8px 32px rgba(31,41,55,0.08)' };
 
@@ -65,16 +65,16 @@ export default function LoginPage() {
             <h1 className="text-xl font-bold font-display" style={{ color:'#2E7D6B' }}>Traveloop</h1>
           </div>
 
-          <h1 className="text-3xl font-bold font-display mb-1" style={{ color:'#1F2937' }}>Welcome back 👋</h1>
+          <h1 className="text-3xl font-bold font-display mb-1 flex items-center gap-2" style={{ color:'#1F2937' }}>Welcome back <Hand className="w-8 h-8 text-amber-500" /></h1>
           <p className="text-sm mb-8" style={{ color:'#6B7280' }}>Sign in to continue your journey</p>
 
           <div className="rounded-3xl p-8" style={GLASS}>
             <form onSubmit={handleSubmit} className="space-y-5">
               {error && (
                 <motion.div initial={{ opacity:0, y:-8 }} animate={{ opacity:1, y:0 }}
-                  className="rounded-2xl px-4 py-3 text-sm"
+                  className="rounded-2xl px-4 py-3 text-sm flex items-center gap-2"
                   style={{ background:'#FEE2E2', border:'1px solid #FECACA', color:'#991B1B' }}>
-                  {error}
+                  <AlertTriangle className="w-4 h-4 shrink-0" /> {error}
                 </motion.div>
               )}
               <div>
@@ -109,16 +109,16 @@ export default function LoginPage() {
             <div className="divider" />
             <p className="text-center text-sm" style={{ color:'#6B7280' }}>
               Don't have an account?{' '}
-              <Link to="/signup" className="font-semibold hover:underline" style={{ color:'#2E7D6B' }}>
-                Create one free →
+              <Link to="/signup" className="font-semibold hover:underline inline-flex items-center gap-1" style={{ color:'#2E7D6B' }}>
+                Create one free <ArrowRight className="w-4 h-4" />
               </Link>
             </p>
           </div>
 
           <p className="text-center text-xs mt-4" style={{ color:'#9CA3AF' }}>
             Admin?{' '}
-            <Link to="/admin/login" className="font-semibold hover:underline" style={{ color:'#2E7D6B' }}>
-              Go to Admin Console →
+            <Link to="/admin/login" className="font-semibold hover:underline inline-flex items-center gap-1" style={{ color:'#2E7D6B' }}>
+              Go to Admin Console <ArrowRight className="w-3 h-3" />
             </Link>
           </p>
         </motion.div>

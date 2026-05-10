@@ -1,15 +1,22 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import api from '../lib/api';
 import { PlusCircle, Calendar, FileText, Globe, Loader2 } from 'lucide-react';
 
 export default function CreateTrip() {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const [form, setForm] = useState({
-    title: '', description: '', startDate: '', endDate: '', isPublic: false,
+    title: searchParams.get('title') || '', description: '', startDate: '', endDate: '', isPublic: false,
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+
+  // Update title if query param changes
+  useEffect(() => {
+    const t = searchParams.get('title');
+    if (t) setForm(f => ({ ...f, title: t }));
+  }, [searchParams]);
 
   const update = (field) => (e) => setForm({ ...form, [field]: e.type === 'checkbox' ? e.target.checked : e.target.value });
 

@@ -15,11 +15,11 @@ const MESHES = ['trip-card-mesh-1','trip-card-mesh-2','trip-card-mesh-3','trip-c
 const STATUS_BADGE = { PLANNING:'badge-teal', CONFIRMED:'badge-sage', ONGOING:'badge-amber', COMPLETED:'badge-sage', CANCELLED:'badge-red' };
 
 const RECOMMENDED = [
-  { id:1, name:'Bali Getaway', country:'Indonesia', duration:'7 Days', budget:'₹65,000', category:'Beach', tag:'🔥 Trending', img:'https://images.unsplash.com/photo-1537996194471-e657df975ab4?w=400&q=80', color:'from-orange-400 to-pink-500' },
-  { id:2, name:'Swiss Alps Escape', country:'Switzerland', duration:'10 Days', budget:'₹2,40,000', category:'Mountains', tag:'⭐ Top Rated', img:'https://images.unsplash.com/photo-1531366936337-7c912a4589a7?w=400&q=80', color:'from-blue-400 to-cyan-500' },
-  { id:3, name:'Greece Island Hopping', country:'Greece', duration:'12 Days', budget:'₹1,80,000', category:'Culture', tag:'🌊 Popular', img:'https://images.unsplash.com/photo-1533105079780-92b9be482077?w=400&q=80', color:'from-sky-400 to-blue-600' },
-  { id:4, name:'Vietnam Explorer', country:'Vietnam', duration:'8 Days', budget:'₹55,000', category:'Adventure', tag:'🌿 Hidden Gem', img:'https://images.unsplash.com/photo-1528127269322-539801943592?w=400&q=80', color:'from-green-400 to-emerald-600' },
-  { id:5, name:'Rajasthan Heritage', country:'India', duration:'6 Days', budget:'₹28,000', category:'Culture', tag:'🏰 Heritage', img:'https://images.unsplash.com/photo-1599661046289-e31897846e41?w=400&q=80', color:'from-amber-400 to-orange-500' },
+  { id:1, name:'Bali Getaway', country:'Indonesia', duration:'7 Days', budget:'₹65,000', category:'Beach', tag:'Trending', img:'https://images.unsplash.com/photo-1537996194471-e657df975ab4?w=400&q=80', color:'from-orange-400 to-pink-500' },
+  { id:2, name:'Swiss Alps Escape', country:'Switzerland', duration:'10 Days', budget:'₹2,40,000', category:'Mountains', tag:'Top Rated', img:'https://images.unsplash.com/photo-1531366936337-7c912a4589a7?w=400&q=80', color:'from-blue-400 to-cyan-500' },
+  { id:3, name:'Greece Island Hopping', country:'Greece', duration:'12 Days', budget:'₹1,80,000', category:'Culture', tag:'Popular', img:'https://images.unsplash.com/photo-1533105079780-92b9be482077?w=400&q=80', color:'from-sky-400 to-blue-600' },
+  { id:4, name:'Vietnam Explorer', country:'Vietnam', duration:'8 Days', budget:'₹55,000', category:'Adventure', tag:'Hidden Gem', img:'https://images.unsplash.com/photo-1528127269322-539801943592?w=400&q=80', color:'from-green-400 to-emerald-600' },
+  { id:5, name:'Rajasthan Heritage', country:'India', duration:'6 Days', budget:'₹28,000', category:'Culture', tag:'Heritage', img:'https://images.unsplash.com/photo-1599661046289-e31897846e41?w=400&q=80', color:'from-amber-400 to-orange-500' },
 ];
 
 const EXPLORE_ACTIONS = [
@@ -201,45 +201,54 @@ export default function Dashboard() {
           {RECOMMENDED.map((dest, i) => (
             <motion.div key={dest.id}
               initial={{opacity:0,x:30}} animate={{opacity:1,x:0}} transition={{delay:i*0.08}}
-              whileHover="hover" initial="rest" variants={cardHover}
-              className="shrink-0 w-60 card overflow-hidden cursor-pointer group">
-              {/* Image */}
-              <div className="relative h-40 overflow-hidden">
-                <img src={dest.img} alt={dest.name}
-                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
-                {/* Tag */}
-                <span className="absolute top-3 left-3 text-white text-[10px] font-bold px-2 py-1 rounded-full"
-                  style={{background:'rgba(255,255,255,0.2)', backdropFilter:'blur(8px)', border:'1px solid rgba(255,255,255,0.3)'}}>
-                  {dest.tag}
-                </span>
-                {/* Wishlist */}
-                <motion.button whileTap={{scale:0.85}} onClick={() => toggleWish(dest.id)}
-                  className="absolute top-3 right-3 w-7 h-7 rounded-full flex items-center justify-center"
-                  style={{background:'rgba(255,255,255,0.2)', backdropFilter:'blur(8px)'}}>
-                  <Heart className={`w-3.5 h-3.5 transition-colors ${wishlist[dest.id] ? 'text-red-400 fill-red-400' : 'text-white'}`} />
-                </motion.button>
-                {/* Category */}
-                <span className="absolute bottom-3 right-3 text-white text-[10px] font-semibold px-2 py-0.5 rounded-full"
-                  style={{background:`linear-gradient(135deg,${dest.color.replace('from-','').replace(' to-',',')})`, opacity:0.9}}>
-                  {dest.category}
-                </span>
-              </div>
-              {/* Info */}
-              <div className="p-4">
-                <h3 className="font-bold text-[#1F2937] text-sm">{dest.name}</h3>
-                <div className="flex items-center gap-1 mt-1">
-                  <MapPin className="w-3 h-3 text-[#9CA3AF]" />
-                  <span className="text-xs text-[#6B7280]">{dest.country}</span>
+              whileHover="hover" variants={cardHover}
+              className="shrink-0 w-60 overflow-hidden cursor-pointer group" style={{borderRadius:16}}>
+              <Link
+                to={`/trips/new?title=${encodeURIComponent(dest.name + ' — ' + dest.country)}`}
+                className="block card overflow-hidden h-full"
+                style={{textDecoration:'none'}}
+              >
+                {/* Image */}
+                <div className="relative h-40 overflow-hidden">
+                  <img src={dest.img} alt={dest.name}
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
+                  {/* Tag */}
+                  <span className="absolute top-3 left-3 text-white text-[10px] font-bold px-2 py-1 rounded-full"
+                    style={{background:'rgba(255,255,255,0.2)', backdropFilter:'blur(8px)', border:'1px solid rgba(255,255,255,0.3)'}}>
+                    {dest.tag}
+                  </span>
+                  {/* Wishlist */}
+                  <motion.button whileTap={{scale:0.85}}
+                    onClick={(e) => { e.preventDefault(); e.stopPropagation(); toggleWish(dest.id); }}
+                    className="absolute top-3 right-3 w-7 h-7 rounded-full flex items-center justify-center"
+                    style={{background:'rgba(255,255,255,0.2)', backdropFilter:'blur(8px)'}}>
+                    <Heart className={`w-3.5 h-3.5 transition-colors ${wishlist[dest.id] ? 'text-red-400 fill-red-400' : 'text-white'}`} />
+                  </motion.button>
+                  {/* Category */}
+                  <span className="absolute bottom-3 right-3 text-white text-[10px] font-semibold px-2 py-0.5 rounded-full bg-black/40">
+                    {dest.category}
+                  </span>
                 </div>
-                <div className="flex items-center justify-between mt-3">
-                  <div>
-                    <p className="text-xs text-[#9CA3AF]">Est. Budget</p>
-                    <p className="text-sm font-bold text-[#2E7D6B]">{dest.budget}</p>
+                {/* Info */}
+                <div className="p-4">
+                  <h3 className="font-bold text-[#1F2937] text-sm group-hover:text-[#2E7D6B] transition-colors">{dest.name}</h3>
+                  <div className="flex items-center gap-1 mt-1">
+                    <MapPin className="w-3 h-3 text-[#9CA3AF]" />
+                    <span className="text-xs text-[#6B7280]">{dest.country}</span>
                   </div>
-                  <span className="text-xs font-medium text-[#6B7280] bg-[#EFEDE7] px-2 py-1 rounded-lg">{dest.duration}</span>
+                  <div className="flex items-center justify-between mt-3">
+                    <div>
+                      <p className="text-xs text-[#9CA3AF]">Est. Budget</p>
+                      <p className="text-sm font-bold text-[#2E7D6B]">{dest.budget}</p>
+                    </div>
+                    <span className="text-xs font-medium text-[#6B7280] bg-[#EFEDE7] px-2 py-1 rounded-lg">{dest.duration}</span>
+                  </div>
+                  <div className="mt-3 flex items-center gap-1 text-xs text-[#2E7D6B] font-semibold opacity-0 group-hover:opacity-100 transition-opacity">
+                    Plan this trip <ArrowRight className="w-3 h-3" />
+                  </div>
                 </div>
-              </div>
+              </Link>
             </motion.div>
           ))}
         </div>
@@ -290,7 +299,7 @@ export default function Dashboard() {
                     {trip.stops?.length > 0 && (
                       <p className="text-xs text-[#9CA3AF] mt-0.5 flex items-center gap-1 truncate">
                         <MapPin className="w-3 h-3 shrink-0" />
-                        {trip.stops.map(s=>s.city?.name).filter(Boolean).join(' → ')}
+                        {trip.stops.map(s=>s.city?.name).filter(Boolean).map((name, i, arr) => <span key={i} className="flex items-center">{name}{i < arr.length - 1 && <ArrowRight className="w-3 h-3 mx-1 inline" />}</span>)}
                       </p>
                     )}
                   </div>
@@ -321,7 +330,7 @@ export default function Dashboard() {
                     {trip.stops?.length > 0 && (
                       <p className="text-xs text-[#9CA3AF] mt-1.5 flex items-center gap-1">
                         <MapPin className="w-3 h-3" />
-                        {trip.stops.map(s=>s.city?.name).filter(Boolean).join(' → ')}
+                        {trip.stops.map(s=>s.city?.name).filter(Boolean).map((name, i, arr) => <span key={i} className="flex items-center">{name}{i < arr.length - 1 && <ArrowRight className="w-3 h-3 mx-1 inline" />}</span>)}
                       </p>
                     )}
                   </div>

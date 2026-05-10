@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { motion } from 'framer-motion';
-import { Compass, Mail, Lock, User, Eye, EyeOff, Loader2, MapPin, Luggage, Calendar } from 'lucide-react';
+import { Compass, Mail, Lock, User, Eye, EyeOff, Loader2, MapPin, Luggage, Calendar, Globe, ArrowRight } from 'lucide-react';
 
 const GLASS = { background:'rgba(255,255,255,0.7)', backdropFilter:'blur(18px)', WebkitBackdropFilter:'blur(18px)', border:'1px solid rgba(124,154,126,0.2)', boxShadow:'0 8px 32px rgba(31,41,55,0.08)' };
 const FEATURES = [
@@ -45,7 +45,7 @@ export default function SignupPage() {
             <h1 className="text-xl font-bold font-display" style={{ color:'#2E7D6B' }}>Traveloop</h1>
           </div>
 
-          <h1 className="text-3xl font-bold font-display mb-1" style={{ color:'#1F2937' }}>Start exploring 🌍</h1>
+          <h1 className="text-3xl font-bold font-display mb-1 flex items-center gap-2" style={{ color:'#1F2937' }}>Start exploring <Globe className="w-8 h-8 text-teal-600" /></h1>
           <p className="text-sm mb-8" style={{ color:'#6B7280' }}>Create your free account — no credit card needed</p>
 
           <div className="rounded-3xl p-8" style={GLASS}>
@@ -104,8 +104,8 @@ export default function SignupPage() {
             <div className="divider" />
             <p className="text-center text-sm" style={{ color:'#6B7280' }}>
               Already have an account?{' '}
-              <Link to="/login" className="font-semibold hover:underline" style={{ color:'#2E7D6B' }}>
-                Sign in →
+              <Link to="/login" className="font-semibold hover:underline inline-flex items-center gap-1" style={{ color:'#2E7D6B' }}>
+                Sign in <ArrowRight className="w-4 h-4" />
               </Link>
             </p>
           </div>

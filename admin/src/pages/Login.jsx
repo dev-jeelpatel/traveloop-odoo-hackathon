@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import useAuthStore from '../store/authStore';
-import { Shield, Mail, Lock, Eye, EyeOff, Loader, BarChart3, Map, Users } from 'lucide-react';
+import { Shield, Mail, Lock, Eye, EyeOff, Loader, BarChart3, Map, Users, AlertTriangle, ArrowRight } from 'lucide-react';
 
 const FEATURES = [
   { icon:BarChart3, text:'Real-time analytics dashboard' },
@@ -89,8 +89,8 @@ export default function Login() {
             <form onSubmit={submit} style={{ display:'flex', flexDirection:'column', gap:'1rem' }}>
               {error && (
                 <motion.div initial={{ opacity:0, y:-8 }} animate={{ opacity:1, y:0 }}
-                  style={{ padding:'0.75rem 1rem', borderRadius:12, background:'#FEE2E2', border:'1px solid #FECACA', color:'#991B1B', fontSize:'0.875rem' }}>
-                  ⚠️ {error}
+                  style={{ padding:'0.75rem 1rem', borderRadius:12, background:'#FEE2E2', border:'1px solid #FECACA', color:'#991B1B', fontSize:'0.875rem', display:'flex', alignItems:'center', gap:'0.5rem' }}>
+                  <AlertTriangle size={16} /> {error}
                 </motion.div>
               )}
               <div>
@@ -123,8 +123,8 @@ export default function Login() {
             <div className="divider" />
             <p style={{ textAlign:'center', fontSize:'0.875rem', color:'#6B7280' }}>
               New administrator?{' '}
-              <Link to="/signup" style={{ color:'#2E7D6B', fontWeight:600, textDecoration:'none' }}>
-                Create admin account →
+              <Link to="/signup" style={{ color:'#2E7D6B', fontWeight:600, textDecoration:'none', display:'inline-flex', alignItems:'center', gap:'0.25rem' }}>
+                Create admin account <ArrowRight size={14} />
               </Link>
             </p>
           </div>
