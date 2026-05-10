@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { useAdminAuth } from '../AdminAuthContext';
+import { useAdminAuth } from '../useAdminAuth';
 import { motion } from 'framer-motion';
 import { Compass, Mail, Lock, Eye, EyeOff, Loader2, Shield, BarChart3, Users, Map } from 'lucide-react';
 
@@ -141,6 +141,12 @@ export default function AdminLogin() {
 
           <p className="text-center text-xs mt-6" style={{ color:'#9CA3AF' }}>
             Protected by role-based access control
+          </p>
+          <p className="text-center text-xs mt-3" style={{ color:'#9CA3AF' }}>
+            New administrator?{' '}
+            <Link to="/admin/signup" className="font-semibold hover:underline" style={{ color:'#2E7D6B' }}>
+              Create admin account →
+            </Link>
           </p>
         </motion.div>
       </div>

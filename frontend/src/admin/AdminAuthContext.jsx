@@ -1,7 +1,7 @@
-import { createContext, useContext, useState, useEffect } from 'react';
+import { createContext, useState, useEffect } from 'react';
 import api from '../lib/api';
 
-const AdminAuthContext = createContext(null);
+export const AdminAuthContext = createContext(null);
 
 export function AdminAuthProvider({ children }) {
   const [admin, setAdmin] = useState(() => {
@@ -36,6 +36,14 @@ export function AdminAuthProvider({ children }) {
     return data;
   };
 
+  const adminSignup = async (name, email, password, inviteKey) => {
+    const { data } = await api.post('/auth/admin-signup', { name, email, password, inviteKey });
+    localStorage.setItem('traveloop_admin_token', data.token);
+    localStorage.setItem('traveloop_admin', JSON.stringify(data.user));
+    setAdmin(data.user);
+    return data;
+  };
+
   const adminLogout = () => {
     localStorage.removeItem('traveloop_admin_token');
     localStorage.removeItem('traveloop_admin');
@@ -43,10 +51,8 @@ export function AdminAuthProvider({ children }) {
   };
 
   return (
-    <AdminAuthContext.Provider value={{ admin, loading, adminLogin, adminLogout }}>
+    <AdminAuthContext.Provider value={{ admin, loading, adminLogin, adminSignup, adminLogout }}>
       {children}
     </AdminAuthContext.Provider>
   );
 }
-
-export const useAdminAuth = () => useContext(AdminAuthContext);

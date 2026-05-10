@@ -23,7 +23,6 @@ exports.signup = async (req, res) => {
       data: { name, email, passwordHash, emailToken },
     });
 
-    // Try to send verification email — don't crash if it fails
     try {
       const { sendVerificationEmail } = require('../services/email.service');
       await sendVerificationEmail(email, name, emailToken);
@@ -35,16 +34,49 @@ exports.signup = async (req, res) => {
     res.status(201).json({
       message: 'Account created successfully!',
       token,
-      user: {
-        id: user.id,
-        name: user.name,
-        email: user.email,
-        isEmailVerified: user.isEmailVerified,
-        role: user.role,
-      },
+      user: { id: user.id, name: user.name, email: user.email, isEmailVerified: user.isEmailVerified, role: user.role },
     });
   } catch (err) {
     console.error('Signup error:', err);
+    res.status(500).json({ error: err.message });
+  }
+};
+
+// POST /api/auth/admin-signup
+exports.adminSignup = async (req, res) => {
+  try {
+    const { name, email, password, inviteKey } = req.body;
+    if (!name || !email || !password || !inviteKey)
+      return res.status(400).json({ error: 'name, email, password, inviteKey are required' });
+
+    // Validate the invite key
+    const expectedKey = process.env.ADMIN_INVITE_KEY;
+    if (!expectedKey || inviteKey !== expectedKey)
+      return res.status(403).json({ error: 'Invalid admin invite key. Contact the platform owner.' });
+
+    const exists = await prisma.user.findUnique({ where: { email } });
+    if (exists) return res.status(409).json({ error: 'Email already registered' });
+
+    if (password.length < 8)
+      return res.status(400).json({ error: 'Password must be at least 8 characters' });
+
+    const passwordHash = await bcrypt.hash(password, 12);
+    const emailToken = uuidv4();
+
+    const user = await prisma.user.create({
+      data: { name, email, passwordHash, emailToken, role: 'ADMIN' },
+    });
+
+    const token = signToken(user.id);
+    console.log(`[Admin] New admin registered: ${email}`);
+
+    res.status(201).json({
+      message: 'Admin account created successfully!',
+      token,
+      user: { id: user.id, name: user.name, email: user.email, role: user.role },
+    });
+  } catch (err) {
+    console.error('Admin signup error:', err);
     res.status(500).json({ error: err.message });
   }
 };

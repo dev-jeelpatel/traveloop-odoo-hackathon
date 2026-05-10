@@ -1,5 +1,5 @@
 import { Outlet, NavLink, useNavigate } from 'react-router-dom';
-import { useAdminAuth } from '../AdminAuthContext';
+import { useAdminAuth } from '../useAdminAuth';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useState } from 'react';
 import {

@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
-import { AdminAuthProvider, useAdminAuth } from './admin/AdminAuthContext';
+import { AdminAuthProvider } from './admin/AdminAuthContext';
 import Layout from './components/Layout';
 
 // User pages
@@ -22,6 +22,7 @@ import ProfilePage from './pages/ProfilePage';
 
 // Admin pages
 import AdminLogin from './admin/pages/AdminLogin';
+import AdminSignup from './admin/pages/AdminSignup';
 import AdminLayout from './admin/components/AdminLayout';
 import AdminDashboard from './admin/pages/AdminDashboard';
 import ManageTrips from './admin/pages/ManageTrips';
@@ -105,7 +106,8 @@ export default function App() {
             </Route>
 
             {/* ── Admin public ────────────────────────────────────────── */}
-            <Route path="/admin/login" element={<AdminPublicRoute><AdminLogin /></AdminPublicRoute>} />
+            <Route path="/admin/login"  element={<AdminPublicRoute><AdminLogin /></AdminPublicRoute>} />
+            <Route path="/admin/signup" element={<AdminPublicRoute><AdminSignup /></AdminPublicRoute>} />
 
             {/* ── Admin protected ─────────────────────────────────────── */}
             <Route path="/admin" element={<AdminProtectedRoute><AdminLayout /></AdminProtectedRoute>}>
