@@ -36,8 +36,8 @@ export function AdminAuthProvider({ children }) {
     return data;
   };
 
-  const adminSignup = async (name, email, password, inviteKey) => {
-    const { data } = await api.post('/auth/admin-signup', { name, email, password, inviteKey });
+  const adminSignup = async (name, email, password) => {
+    const { data } = await api.post('/auth/admin-signup', { name, email, password });
     localStorage.setItem('traveloop_admin_token', data.token);
     localStorage.setItem('traveloop_admin', JSON.stringify(data.user));
     setAdmin(data.user);

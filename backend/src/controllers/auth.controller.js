@@ -45,14 +45,9 @@ exports.signup = async (req, res) => {
 // POST /api/auth/admin-signup
 exports.adminSignup = async (req, res) => {
   try {
-    const { name, email, password, inviteKey } = req.body;
-    if (!name || !email || !password || !inviteKey)
-      return res.status(400).json({ error: 'name, email, password, inviteKey are required' });
-
-    // Validate the invite key
-    const expectedKey = process.env.ADMIN_INVITE_KEY;
-    if (!expectedKey || inviteKey !== expectedKey)
-      return res.status(403).json({ error: 'Invalid admin invite key. Contact the platform owner.' });
+    const { name, email, password } = req.body;
+    if (!name || !email || !password)
+      return res.status(400).json({ error: 'name, email and password are required' });
 
     const exists = await prisma.user.findUnique({ where: { email } });
     if (exists) return res.status(409).json({ error: 'Email already registered' });
