@@ -2,9 +2,10 @@
  * Prisma seed script — run with:  npx prisma db seed
  * Or manually:  node prisma/seed.js
  *
- * Adds sample cities + activities so the app is immediately usable.
+ * Adds sample cities, activities, users, and trips so the app is immediately usable.
  */
 const { PrismaClient } = require('@prisma/client');
+const bcrypt = require('bcryptjs');
 const prisma = new PrismaClient();
 
 const cities = [
@@ -96,6 +97,36 @@ const activities = {
 async function main() {
   console.log('🌱 Seeding database...');
 
+  // 1. Create Users
+  const passwordHash = await bcrypt.hash('password123', 10);
+  
+  const admin = await prisma.user.upsert({
+    where: { email: 'admin@traveloop.com' },
+    update: {},
+    create: {
+      name: 'Traveloop Admin',
+      email: 'admin@traveloop.com',
+      passwordHash,
+      role: 'ADMIN',
+      isEmailVerified: true
+    }
+  });
+  console.log('✅ Admin user created: admin@traveloop.com (pwd: password123)');
+
+  const user = await prisma.user.upsert({
+    where: { email: 'user@traveloop.com' },
+    update: {},
+    create: {
+      name: 'John Doe',
+      email: 'user@traveloop.com',
+      passwordHash,
+      role: 'USER',
+      isEmailVerified: true
+    }
+  });
+  console.log('✅ Regular user created: user@traveloop.com (pwd: password123)');
+
+  // 2. Create Cities & Activities
   for (const cityData of cities) {
     const city = await prisma.city.upsert({
       where: { name_country: { name: cityData.name, country: cityData.country } },
@@ -106,19 +137,95 @@ async function main() {
 
     const cityActivities = activities[city.name] || [];
     for (const act of cityActivities) {
+      const dataToCreate = { ...act, cityId: city.id, costEstimate: parseFloat(act.costEstimate) || 0 };
       await prisma.activity.upsert({
         where: { id: `${city.id}-${act.name}`.slice(0, 36) },
         update: {},
-        create: { ...act, cityId: city.id, costEstimate: act.costEstimate?.toString() },
+        create: dataToCreate,
       }).catch(async () => {
-        // If upsert by generated ID fails, just create
-        await prisma.activity.create({
-          data: { ...act, cityId: city.id, costEstimate: act.costEstimate?.toString() },
-        }).catch(() => null);
+        await prisma.activity.create({ data: dataToCreate }).catch(() => null);
       });
     }
     console.log(`   ↳ ${cityActivities.length} activities added`);
   }
+
+  // 3. Create Admin Trips (Packages)
+  const packages = [
+    {
+      title: 'Bali Premium Escape', destination: 'Bali', durationDays: 7,
+      packageType: 'LUXURY', basePrice: 75000, bestSeason: 'Summer',
+      coverImage: 'https://images.unsplash.com/photo-1537996194471-e657df975ab4?w=800&q=80',
+      rating: 4.8, views: 1240, popularity: 95, isTrending: true, isPublic: true, status: 'AVAILABLE',
+      startDate: new Date(), endDate: new Date(Date.now() + 7 * 86400000)
+    },
+    {
+      title: 'Swiss Alps Adventure', destination: 'Switzerland', durationDays: 10,
+      packageType: 'ADVENTURE', basePrice: 250000, bestSeason: 'Winter',
+      coverImage: 'https://images.unsplash.com/photo-1531366936337-7c912a4589a7?w=800&q=80',
+      rating: 4.9, views: 980, popularity: 88, isTrending: false, isPublic: true, status: 'AVAILABLE',
+      startDate: new Date(), endDate: new Date(Date.now() + 10 * 86400000)
+    },
+    {
+      title: 'Goa Weekend Getaway', destination: 'Goa', durationDays: 4,
+      packageType: 'BUDGET', basePrice: 45000, bestSeason: 'Winter',
+      coverImage: 'https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?w=800&q=80',
+      rating: 4.6, views: 2100, popularity: 99, isTrending: true, isPublic: true, status: 'AVAILABLE',
+      startDate: new Date(), endDate: new Date(Date.now() + 4 * 86400000)
+    },
+    {
+      title: 'Rajasthan Heritage Tour', destination: 'Jaipur', durationDays: 6,
+      packageType: 'CULTURAL', basePrice: 35000, bestSeason: 'Winter',
+      coverImage: 'https://images.unsplash.com/photo-1599661046289-e31897846e41?w=800&q=80',
+      rating: 4.7, views: 876, popularity: 85, isTrending: false, isPublic: true, status: 'AVAILABLE',
+      startDate: new Date(), endDate: new Date(Date.now() + 6 * 86400000)
+    },
+    {
+      title: 'Paris Romantic Honeymoon', destination: 'Paris', durationDays: 5,
+      packageType: 'HONEYMOON', basePrice: 150000, bestSeason: 'Spring',
+      coverImage: 'https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=800&q=80',
+      rating: 4.9, views: 3400, popularity: 97, isTrending: true, isPublic: true, status: 'AVAILABLE',
+      startDate: new Date(), endDate: new Date(Date.now() + 5 * 86400000)
+    }
+  ];
+
+  for (const pkg of packages) {
+    await prisma.trip.create({
+      data: { ...pkg, userId: admin.id }
+    });
+  }
+  console.log(`✅ ${packages.length} Admin Trip Packages created`);
+
+  // 4. Create User Trips (Personal Trips)
+  const userTrips = [
+    {
+      title: 'My Dream Tokyo Trip', destination: 'Tokyo', durationDays: 14,
+      packageType: 'CULTURAL', basePrice: null, bestSeason: 'Spring',
+      coverImage: 'https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?w=800&q=80',
+      rating: 0, views: 12, popularity: 5, isTrending: false, isPublic: false, status: 'PLANNING',
+      startDate: new Date(Date.now() + 30 * 86400000), endDate: new Date(Date.now() + 44 * 86400000)
+    },
+    {
+      title: 'Dubai Business + Leisure', destination: 'Dubai', durationDays: 5,
+      packageType: 'LUXURY', basePrice: null, bestSeason: 'Winter',
+      coverImage: 'https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=800&q=80',
+      rating: 0, views: 0, popularity: 0, isTrending: false, isPublic: false, status: 'CONFIRMED',
+      startDate: new Date(Date.now() + 10 * 86400000), endDate: new Date(Date.now() + 15 * 86400000)
+    },
+    {
+      title: 'Past Trip: Singapore', destination: 'Singapore', durationDays: 6,
+      packageType: 'FAMILY', basePrice: null, bestSeason: 'Summer',
+      coverImage: 'https://images.unsplash.com/photo-1525625293386-3f8f99389edd?w=800&q=80',
+      rating: 5.0, views: 45, popularity: 10, isTrending: false, isPublic: true, status: 'COMPLETED',
+      startDate: new Date(Date.now() - 60 * 86400000), endDate: new Date(Date.now() - 54 * 86400000)
+    }
+  ];
+
+  for (const trip of userTrips) {
+    await prisma.trip.create({
+      data: { ...trip, userId: user.id }
+    });
+  }
+  console.log(`✅ ${userTrips.length} Regular User Trips created`);
 
   console.log('\n🎉 Seed complete!');
 }

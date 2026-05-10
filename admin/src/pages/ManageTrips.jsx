@@ -121,7 +121,18 @@ export default function ManageTrips() {
                 <tbody>
                   {filtered.map((t,i)=>(
                     <tr key={t.id}>
-                      <td><div style={{display:"flex",alignItems:"center",gap:"0.75rem"}}><div style={{width:36,height:36,borderRadius:12,flexShrink:0}} className={"mesh-"+((i%6)+1)}/><span style={{fontWeight:600}}>{t.title}</span></div></td>
+                      <td>
+                        <div style={{display:"flex",alignItems:"center",gap:"0.75rem"}}>
+                          {t.coverImage ? (
+                            <img src={t.coverImage} alt={t.title} style={{width:40,height:40,borderRadius:12,objectFit:"cover",flexShrink:0,boxShadow:"0 2px 8px rgba(0,0,0,0.1)"}} />
+                          ) : (
+                            <div style={{width:40,height:40,borderRadius:12,flexShrink:0,display:"flex",alignItems:"center",justifyContent:"center",background:"rgba(46,125,107,0.1)",color:"#2E7D6B",fontWeight:700,fontSize:"1.1rem"}}>
+                              {t.title.charAt(0).toUpperCase()}
+                            </div>
+                          )}
+                          <span style={{fontWeight:600}}>{t.title}</span>
+                        </div>
+                      </td>
                       <td style={{color:"#6B7280"}}>{t.destination || "-"}</td>
                       <td style={{fontWeight:700,color:"#2E7D6B"}}>{t.basePrice ? `Rs.${t.basePrice}` : "-"}</td>
                       <td><span className="badge badge-cream">{t.bestSeason || "-"}</span></td>
