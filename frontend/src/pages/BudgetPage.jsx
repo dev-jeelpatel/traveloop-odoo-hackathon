@@ -75,7 +75,7 @@ export default function BudgetPage() {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Budget setup */}
-        <div className="glass-card p-6 space-y-4">
+        <div className="card p-6 space-y-4">
           <h2 className="section-title">Budget Allocation</h2>
           <div className="grid grid-cols-2 gap-3">
             <div>
@@ -110,13 +110,13 @@ export default function BudgetPage() {
           {budget && (
             <div className="grid grid-cols-3 gap-3 pt-2">
               {[
-                { label: 'Total', val: Number(budget.totalBudget), color: 'text-white' },
-                { label: 'Spent', val: totalSpent, color: 'text-coral-400' },
-                { label: 'Left', val: remaining, color: remaining >= 0 ? 'text-sage-400' : 'text-coral-400' },
+                { label: 'Total', val: Number(budget.totalBudget), color: 'text-ink-900' },
+                { label: 'Spent', val: totalSpent, color: 'text-red-500' },
+                { label: 'Left', val: remaining, color: remaining >= 0 ? 'text-sage-400' : 'text-red-500' },
               ].map(({ label, val, color }) => (
-                <div key={label} className="text-center glass-card p-3">
+                <div key={label} className="text-center card p-3">
                   <p className={`text-lg font-bold ${color}`}>{budget.currency} {val.toLocaleString()}</p>
-                  <p className="text-xs text-white/40">{label}</p>
+                  <p className="text-xs text-ink-300">{label}</p>
                 </div>
               ))}
             </div>
@@ -125,7 +125,7 @@ export default function BudgetPage() {
 
         {/* Charts */}
         {pieData.length > 0 && (
-          <div className="glass-card p-6">
+          <div className="card p-6">
             <h2 className="section-title">Spending Breakdown</h2>
             <ResponsiveContainer width="100%" height={200}>
               <PieChart>
@@ -140,7 +140,7 @@ export default function BudgetPage() {
       </div>
 
       {/* Add expense */}
-      <div className="glass-card p-6">
+      <div className="card p-6">
         <h2 className="section-title">Add Expense</h2>
         <form onSubmit={addExpense} className="grid grid-cols-2 md:grid-cols-3 gap-3">
           <input type="text" placeholder="Expense title" className="input" required value={expForm.title} onChange={e => setExpForm({ ...expForm, title: e.target.value })} />
@@ -159,21 +159,21 @@ export default function BudgetPage() {
 
       {/* Expense list */}
       {expenses.length > 0 && (
-        <div className="glass-card p-6">
+        <div className="card p-6">
           <h2 className="section-title">Expenses ({expenses.length})</h2>
           <div className="space-y-2">
             {expenses.map(exp => (
-              <div key={exp.id} className="flex items-center justify-between px-4 py-3 bg-white/5 rounded-xl hover:bg-white/8 transition-colors">
+              <div key={exp.id} className="flex items-center justify-between px-4 py-3 bg-cream-100 rounded-xl hover:bg-white/8 transition-colors">
                 <div className="flex items-center gap-3">
-                  <span className="badge badge-primary">{exp.category}</span>
+                  <span className="badge badge-teal">{exp.category}</span>
                   <div>
-                    <p className="text-sm font-medium text-white">{exp.title}</p>
-                    <p className="text-xs text-white/40">{exp.date?.slice(0,10)}</p>
+                    <p className="text-sm font-medium text-ink-900">{exp.title}</p>
+                    <p className="text-xs text-ink-300">{exp.date?.slice(0,10)}</p>
                   </div>
                 </div>
                 <div className="flex items-center gap-3">
                   <span className="font-semibold text-coral-300">{budget?.currency || 'INR'} {Number(exp.amount).toLocaleString()}</span>
-                  <button onClick={() => deleteExpense(exp.id)} className="btn-icon w-7 h-7 text-white/30 hover:text-coral-400">
+                  <button onClick={() => deleteExpense(exp.id)} className="btn-icon w-7 h-7 text-ink-100 hover:text-red-500">
                     <Trash2 className="w-3 h-3" />
                   </button>
                 </div>

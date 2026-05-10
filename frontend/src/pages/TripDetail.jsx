@@ -8,12 +8,12 @@ import {
 } from 'lucide-react';
 
 const STATUS_BADGE = {
-  PLANNING: 'badge-primary', CONFIRMED: 'badge-ocean', ONGOING: 'badge-amber',
-  COMPLETED: 'badge-sage', CANCELLED: 'badge-coral',
+  PLANNING: 'badge-teal', CONFIRMED: 'badge-blue', ONGOING: 'badge-amber',
+  COMPLETED: 'badge-sage', CANCELLED: 'badge-red',
 };
 
 const quickLinks = (id) => [
-  { to: `/trips/${id}/itinerary`, icon: Map, label: 'Itinerary Builder', desc: 'Add stops & activities', color: 'from-primary-500/20 to-primary-600/10' },
+  { to: `/trips/${id}/itinerary`, icon: Map, label: 'Itinerary Builder', desc: 'Add stops & activities', color: 'from-teal-600/20 to-primary-600/10' },
   { to: `/trips/${id}/budget`, icon: DollarSign, label: 'Budget', desc: 'Track spending', color: 'from-sage-500/20 to-sage-600/10' },
   { to: `/trips/${id}/checklist`, icon: CheckSquare, label: 'Packing List', desc: 'Don\'t forget anything', color: 'from-amber-500/20 to-amber-600/10' },
   { to: `/trips/${id}/notes`, icon: FileText, label: 'Journal', desc: 'Trip notes & memories', color: 'from-coral-500/20 to-coral-600/10' },
@@ -49,7 +49,7 @@ export default function TripDetail() {
       </div>
     </div>
   );
-  if (!trip) return <div className="glass-card p-12 text-center text-white/40">Trip not found</div>;
+  if (!trip) return <div className="card p-12 text-center text-ink-300">Trip not found</div>;
 
   const days = Math.ceil((new Date(trip.endDate) - new Date(trip.startDate)) / 86400000) + 1;
 
@@ -60,13 +60,13 @@ export default function TripDetail() {
         <ArrowLeft className="w-4 h-4" /> Back to trips
       </Link>
 
-      <div className="glass-card p-6 bg-gradient-to-r from-primary-600/10 to-ocean-500/5">
+      <div className="card p-6 bg-gradient-to-r from-primary-600/10 to-ocean-500/5">
         <div className="flex flex-col md:flex-row md:items-start gap-4 justify-between">
           <div>
             <span className={`badge ${STATUS_BADGE[trip.status]} mb-3`}>{trip.status}</span>
-            <h1 className="text-2xl md:text-3xl font-bold font-display text-white">{trip.title}</h1>
-            {trip.description && <p className="text-white/50 mt-2 max-w-2xl">{trip.description}</p>}
-            <div className="flex flex-wrap items-center gap-4 mt-4 text-sm text-white/50">
+            <h1 className="text-2xl md:text-3xl font-bold font-display text-ink-900">{trip.title}</h1>
+            {trip.description && <p className="text-ink-300 mt-2 max-w-2xl">{trip.description}</p>}
+            <div className="flex flex-wrap items-center gap-4 mt-4 text-sm text-ink-300">
               <span className="flex items-center gap-1.5"><Calendar className="w-4 h-4" />
                 {format(new Date(trip.startDate), 'MMM d')} – {format(new Date(trip.endDate), 'MMM d, yyyy')}
               </span>
@@ -86,18 +86,18 @@ export default function TripDetail() {
 
       {/* Cities route */}
       {trip.stops?.length > 0 && (
-        <div className="glass-card p-5">
-          <h2 className="text-sm font-semibold text-white/50 uppercase tracking-wider mb-3">Route</h2>
+        <div className="card p-5">
+          <h2 className="text-sm font-semibold text-ink-300 uppercase tracking-wider mb-3">Route</h2>
           <div className="flex flex-wrap items-center gap-2">
             {trip.stops
               .sort((a, b) => a.order - b.order)
               .map((stop, i) => (
                 <span key={stop.id} className="flex items-center gap-2">
-                  <span className="flex items-center gap-1.5 glass-card px-3 py-1.5 text-sm text-white/80">
-                    <MapPin className="w-3 h-3 text-primary-400" />
+                  <span className="flex items-center gap-1.5 card px-3 py-1.5 text-sm text-ink-700">
+                    <MapPin className="w-3 h-3 text-teal-600" />
                     {stop.city?.name}, {stop.city?.country}
                   </span>
-                  {i < trip.stops.length - 1 && <span className="text-white/20">→</span>}
+                  {i < trip.stops.length - 1 && <span className="text-ink-900/20">→</span>}
                 </span>
               ))}
           </div>
@@ -108,22 +108,22 @@ export default function TripDetail() {
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         {quickLinks(id).map(({ to, icon: Icon, label, desc, color }) => (
           <Link key={to} to={to}
-            className={`glass-card bg-gradient-to-br ${color} p-5 group hover:-translate-y-1 transition-all duration-300 hover:shadow-xl block`}>
-            <Icon className="w-6 h-6 text-white/70 group-hover:text-white mb-3 transition-colors" />
-            <p className="font-semibold text-white text-sm">{label}</p>
-            <p className="text-white/40 text-xs mt-0.5">{desc}</p>
+            className={`card bg-gradient-to-br ${color} p-5 group hover:-translate-y-1 transition-all duration-300 hover:shadow-xl block`}>
+            <Icon className="w-6 h-6 text-ink-500 group-hover:text-ink-900 mb-3 transition-colors" />
+            <p className="font-semibold text-ink-900 text-sm">{label}</p>
+            <p className="text-ink-300 text-xs mt-0.5">{desc}</p>
           </Link>
         ))}
       </div>
 
       {/* Budget summary */}
       {trip.budget && (
-        <div className="glass-card p-5">
+        <div className="card p-5">
           <h2 className="section-title">Budget Overview</h2>
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-3xl font-bold text-white">{trip.budget.currency} {Number(trip.budget.totalBudget).toLocaleString()}</p>
-              <p className="text-white/40 text-sm mt-1">Total budget</p>
+              <p className="text-3xl font-bold text-ink-900">{trip.budget.currency} {Number(trip.budget.totalBudget).toLocaleString()}</p>
+              <p className="text-ink-300 text-sm mt-1">Total budget</p>
             </div>
             <Link to={`/trips/${id}/budget`} className="btn-secondary text-sm">Manage Budget →</Link>
           </div>
@@ -132,10 +132,10 @@ export default function TripDetail() {
 
       {/* Checklist preview */}
       {trip.checklists?.length > 0 && (
-        <div className="glass-card p-5">
+        <div className="card p-5">
           <div className="flex items-center justify-between mb-3">
             <h2 className="section-title mb-0">Packing Progress</h2>
-            <Link to={`/trips/${id}/checklist`} className="text-xs text-primary-400 hover:text-primary-300">View all →</Link>
+            <Link to={`/trips/${id}/checklist`} className="text-xs text-teal-600 hover:text-teal-500">View all →</Link>
           </div>
           {trip.checklists.slice(0, 1).map(list => {
             const total = list.items?.length || 0;
@@ -144,11 +144,11 @@ export default function TripDetail() {
             return (
               <div key={list.id}>
                 <div className="flex justify-between text-sm mb-2">
-                  <span className="text-white/70">{list.title}</span>
-                  <span className="text-white/40">{done}/{total}</span>
+                  <span className="text-ink-500">{list.title}</span>
+                  <span className="text-ink-300">{done}/{total}</span>
                 </div>
-                <div className="h-2 bg-white/10 rounded-full overflow-hidden">
-                  <div className="h-full bg-gradient-to-r from-primary-500 to-ocean-400 rounded-full transition-all duration-700" style={{ width: `${pct}%` }} />
+                <div className="h-2 bg-cream-200 rounded-full overflow-hidden">
+                  <div className="h-full bg-gradient-to-r from-teal-600 to-ocean-400 rounded-full transition-all duration-700" style={{ width: `${pct}%` }} />
                 </div>
               </div>
             );

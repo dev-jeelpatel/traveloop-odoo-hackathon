@@ -42,9 +42,9 @@ export default function CommunityPage() {
         <p className="page-subtitle">Discover and copy trips shared by other travelers</p>
       </div>
 
-      <form onSubmit={handleSearch} className="glass-card p-5 flex gap-3">
+      <form onSubmit={handleSearch} className="card p-5 flex gap-3">
         <div className="relative flex-1">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-white/30" />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-ink-100" />
           <input type="text" placeholder="Search itineraries…" className="input pl-10"
             value={q} onChange={e => setQ(e.target.value)} />
         </div>
@@ -56,32 +56,32 @@ export default function CommunityPage() {
           {[1,2,3,4,5,6].map(i => <div key={i} className="skeleton h-56" />)}
         </div>
       ) : shares.length === 0 ? (
-        <div className="glass-card p-12 text-center">
-          <Users className="w-12 h-12 text-white/20 mx-auto mb-3" />
-          <p className="text-white/40 font-medium">No shared itineraries yet</p>
-          <p className="text-white/25 text-sm mt-1">Be the first to share your trip!</p>
+        <div className="card p-12 text-center">
+          <Users className="w-12 h-12 text-ink-900/20 mx-auto mb-3" />
+          <p className="text-ink-300 font-medium">No shared itineraries yet</p>
+          <p className="text-ink-900/25 text-sm mt-1">Be the first to share your trip!</p>
           <Link to="/trips" className="btn-primary mt-4 inline-flex">View My Trips</Link>
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {shares.map((share, idx) => (
-            <div key={share.id} className="glass-card-hover overflow-hidden">
+            <div key={share.id} className="card-hover overflow-hidden">
               <div className={`h-28 ${MESHES[idx % MESHES.length]} relative`}>
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
                 <div className="absolute bottom-3 left-3 flex items-center gap-2">
-                  <span className="flex items-center gap-1 text-xs text-white/80 bg-black/30 rounded-full px-2 py-0.5 backdrop-blur-sm">
+                  <span className="flex items-center gap-1 text-xs text-ink-700 bg-black/30 rounded-full px-2 py-0.5 backdrop-blur-sm">
                     <Eye className="w-3 h-3" />{share.viewsCount}
                   </span>
                 </div>
               </div>
               <div className="p-4 space-y-3">
                 <div>
-                  <h3 className="font-semibold text-white">{share.title}</h3>
-                  {share.description && <p className="text-white/50 text-sm mt-1 line-clamp-2">{share.description}</p>}
+                  <h3 className="font-semibold text-ink-900">{share.title}</h3>
+                  {share.description && <p className="text-ink-300 text-sm mt-1 line-clamp-2">{share.description}</p>}
                 </div>
 
                 {share.trip?.stops?.length > 0 && (
-                  <div className="flex items-center gap-1 text-white/30 text-xs">
+                  <div className="flex items-center gap-1 text-ink-100 text-xs">
                     <MapPin className="w-3 h-3 shrink-0" />
                     {share.trip.stops.map(s => s.city?.name).filter(Boolean).slice(0, 3).join(' → ')}
                   </div>
@@ -89,10 +89,10 @@ export default function CommunityPage() {
 
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
-                    <div className="w-6 h-6 rounded-full bg-gradient-to-br from-primary-500 to-ocean-500 flex items-center justify-center text-[10px] font-bold">
+                    <div className="w-6 h-6 rounded-full bg-gradient-to-br from-teal-600 to-ocean-500 flex items-center justify-center text-[10px] font-bold">
                       {share.user?.name?.[0]}
                     </div>
-                    <span className="text-xs text-white/40">{share.user?.name}</span>
+                    <span className="text-xs text-ink-300">{share.user?.name}</span>
                   </div>
                   <div className="flex gap-2">
                     <Link to={`/community/${share.slug}`} className="btn-ghost py-1 px-2 text-xs">View</Link>

@@ -26,83 +26,97 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-4 relative overflow-hidden">
-      {/* Background blobs */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute -top-40 -left-40 w-96 h-96 bg-primary-600/30 rounded-full blur-3xl animate-pulse-slow" />
-        <div className="absolute -bottom-40 -right-40 w-96 h-96 bg-ocean-500/20 rounded-full blur-3xl animate-pulse-slow" style={{ animationDelay: '1s' }} />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-coral-500/10 rounded-full blur-3xl" />
+    <div className="min-h-screen flex bg-cream-100">
+      {/* Left panel — decorative */}
+      <div className="hidden lg:flex lg:w-1/2 hero-gradient relative overflow-hidden flex-col items-center justify-center p-16">
+        <div className="absolute inset-0 opacity-10" style={{
+          backgroundImage: "url(\"data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='1' fill-rule='evenodd'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/svg%3E\")"
+        }} />
+        <div className="relative text-center text-white">
+          <div className="w-20 h-20 bg-white/20 rounded-3xl flex items-center justify-center mx-auto mb-6 backdrop-blur-sm border border-white/30">
+            <Compass className="w-10 h-10 text-white" />
+          </div>
+          <h2 className="text-4xl font-bold font-display mb-4">Plan your<br />perfect journey</h2>
+          <p className="text-teal-100 text-lg max-w-xs mx-auto">
+            Build itineraries, track budgets, discover cities — all in one place.
+          </p>
+          <div className="mt-10 grid grid-cols-3 gap-4 text-center">
+            {[['10+','Destinations'],['50+','Activities'],['Free','Forever']].map(([v,l]) => (
+              <div key={l} className="bg-white/10 rounded-2xl p-4 backdrop-blur-sm border border-white/20">
+                <p className="text-2xl font-bold font-display">{v}</p>
+                <p className="text-teal-100 text-sm">{l}</p>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
 
-      <div className="w-full max-w-md animate-slide-up relative z-10">
-        {/* Logo */}
-        <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-primary-500 to-ocean-500 shadow-2xl shadow-primary-500/40 mb-4 animate-glow">
-            <Compass className="w-8 h-8 text-white" />
+      {/* Right panel — form */}
+      <div className="flex-1 flex items-center justify-center px-6 py-12">
+        <div className="w-full max-w-md animate-slide-up">
+          {/* Mobile logo */}
+          <div className="lg:hidden text-center mb-8">
+            <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl mb-3"
+              style={{ background: 'linear-gradient(135deg, #0F766E, #14B8A6)' }}>
+              <Compass className="w-7 h-7 text-white" />
+            </div>
+            <h1 className="text-2xl font-bold font-display text-teal-700">Traveloop</h1>
           </div>
-          <h1 className="text-3xl font-bold font-display bg-gradient-to-r from-white to-white/70 bg-clip-text text-transparent">
-            Welcome back
-          </h1>
-          <p className="text-white/50 mt-1">Sign in to your Traveloop account</p>
-        </div>
 
-        <div className="glass-card p-8">
-          <form onSubmit={handleSubmit} className="space-y-5">
-            {error && (
-              <div className="bg-coral-500/10 border border-coral-500/30 rounded-xl px-4 py-3 text-coral-300 text-sm">
-                {error}
+          <h1 className="text-3xl font-bold font-display text-ink-900 mb-1">Welcome back 👋</h1>
+          <p className="text-ink-300 mb-8">Sign in to continue your journey</p>
+
+          <div className="card p-8">
+            <form onSubmit={handleSubmit} className="space-y-5">
+              {error && (
+                <div className="bg-red-50 border border-red-200 rounded-2xl px-4 py-3 text-red-600 text-sm">
+                  {error}
+                </div>
+              )}
+
+              <div>
+                <label className="input-label">Email address</label>
+                <div className="relative">
+                  <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-ink-300" />
+                  <input
+                    id="login-email" type="email" placeholder="you@example.com"
+                    className="input pl-11" value={form.email}
+                    onChange={(e) => setForm({ ...form, email: e.target.value })} required
+                  />
+                </div>
               </div>
-            )}
 
-            <div>
-              <label className="input-label">Email address</label>
-              <div className="relative">
-                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-white/30" />
-                <input
-                  id="login-email"
-                  type="email"
-                  placeholder="you@example.com"
-                  className="input pl-10"
-                  value={form.email}
-                  onChange={(e) => setForm({ ...form, email: e.target.value })}
-                  required
-                />
+              <div>
+                <label className="input-label">Password</label>
+                <div className="relative">
+                  <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-ink-300" />
+                  <input
+                    id="login-password" type={showPass ? 'text' : 'password'}
+                    placeholder="••••••••" className="input pl-11 pr-11"
+                    value={form.password}
+                    onChange={(e) => setForm({ ...form, password: e.target.value })} required
+                  />
+                  <button type="button" onClick={() => setShowPass(!showPass)}
+                    className="absolute right-4 top-1/2 -translate-y-1/2 text-ink-300 hover:text-teal-600 transition-colors">
+                    {showPass ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                  </button>
+                </div>
               </div>
-            </div>
 
-            <div>
-              <label className="input-label">Password</label>
-              <div className="relative">
-                <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-white/30" />
-                <input
-                  id="login-password"
-                  type={showPass ? 'text' : 'password'}
-                  placeholder="••••••••"
-                  className="input pl-10 pr-10"
-                  value={form.password}
-                  onChange={(e) => setForm({ ...form, password: e.target.value })}
-                  required
-                />
-                <button type="button" onClick={() => setShowPass(!showPass)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-white/30 hover:text-white/70 transition-colors">
-                  {showPass ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
-                </button>
-              </div>
-            </div>
+              <button id="login-submit" type="submit" className="btn-primary w-full justify-center" disabled={loading}>
+                {loading && <Loader2 className="w-4 h-4 animate-spin" />}
+                {loading ? 'Signing in…' : 'Sign In'}
+              </button>
+            </form>
 
-            <button id="login-submit" type="submit" className="btn-primary w-full justify-center" disabled={loading}>
-              {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : null}
-              {loading ? 'Signing in…' : 'Sign In'}
-            </button>
-          </form>
-
-          <div className="divider" />
-          <p className="text-center text-white/50 text-sm">
-            Don't have an account?{' '}
-            <Link to="/signup" className="text-primary-400 hover:text-primary-300 font-medium transition-colors">
-              Create one free
-            </Link>
-          </p>
+            <div className="divider" />
+            <p className="text-center text-ink-300 text-sm">
+              Don't have an account?{' '}
+              <Link to="/signup" className="text-teal-600 hover:text-teal-700 font-semibold transition-colors">
+                Create one free →
+              </Link>
+            </p>
+          </div>
         </div>
       </div>
     </div>

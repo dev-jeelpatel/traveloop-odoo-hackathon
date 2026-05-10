@@ -61,63 +61,63 @@ export default function ProfilePage() {
       </div>
 
       {/* Avatar card */}
-      <div className="glass-card p-6 flex items-center gap-5">
+      <div className="card p-6 flex items-center gap-5">
         <div className="relative">
-          <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-primary-500 to-ocean-500 flex items-center justify-center text-3xl font-bold shadow-xl shadow-primary-500/30">
+          <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-teal-600 to-ocean-500 flex items-center justify-center text-3xl font-bold shadow-xl shadow-primary-500/30">
             {profile?.name?.[0]?.toUpperCase()}
           </div>
         </div>
         <div>
-          <h2 className="text-xl font-bold text-white">{profile?.name}</h2>
-          <p className="text-white/50 text-sm">{profile?.email}</p>
+          <h2 className="text-xl font-bold text-ink-900">{profile?.name}</h2>
+          <p className="text-ink-300 text-sm">{profile?.email}</p>
           <div className="flex items-center gap-2 mt-2">
             <span className={`badge ${profile?.isEmailVerified ? 'badge-sage' : 'badge-amber'}`}>
               {profile?.isEmailVerified ? '✓ Verified' : '⚠ Unverified'}
             </span>
-            <span className="badge badge-primary">{profile?.role}</span>
+            <span className="badge badge-teal">{profile?.role}</span>
           </div>
         </div>
       </div>
 
       {/* Tabs */}
-      <div className="flex gap-1 glass-card p-1">
+      <div className="flex gap-1 card p-1">
         {['profile', 'security'].map(tab => (
           <button key={tab} onClick={() => setActiveTab(tab)}
-            className={`flex-1 py-2.5 rounded-xl text-sm font-medium capitalize transition-all duration-200 ${activeTab === tab ? 'bg-primary-600 text-white shadow-lg' : 'text-white/50 hover:text-white'}`}>
+            className={`flex-1 py-2.5 rounded-xl text-sm font-medium capitalize transition-all duration-200 ${activeTab === tab ? 'bg-teal-700 text-ink-900 shadow-lg' : 'text-ink-300 hover:text-ink-900'}`}>
             {tab === 'profile' ? '👤 Profile' : '🔒 Security'}
           </button>
         ))}
       </div>
 
       {activeTab === 'profile' && (
-        <div className="glass-card p-6 space-y-5 animate-fade-in">
+        <div className="card p-6 space-y-5 animate-fade-in">
           <h2 className="section-title">Edit Profile</h2>
           <form onSubmit={saveName} className="space-y-4">
             <div>
               <label className="input-label">Display Name</label>
               <div className="relative">
-                <User className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-white/30" />
+                <User className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-ink-100" />
                 <input type="text" className="input pl-10" value={nameForm.name} onChange={e => setNameForm({ name: e.target.value })} required />
               </div>
             </div>
             <div>
               <label className="input-label">Email Address</label>
               <div className="relative">
-                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-white/30" />
+                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-ink-100" />
                 <input type="email" className="input pl-10 opacity-50 cursor-not-allowed" value={profile?.email || ''} disabled />
               </div>
-              <p className="text-xs text-white/30 mt-1">Email cannot be changed</p>
+              <p className="text-xs text-ink-100 mt-1">Email cannot be changed</p>
             </div>
             <div>
               <label className="input-label">Member Since</label>
               <div className="relative">
-                <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-white/30" />
+                <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-ink-100" />
                 <input type="text" className="input pl-10 opacity-50 cursor-not-allowed"
                   value={profile?.createdAt ? format(new Date(profile.createdAt), 'MMMM d, yyyy') : ''} disabled />
               </div>
             </div>
             {nameMsg && (
-              <p className={`text-sm ${nameMsg.includes('!') ? 'text-sage-400' : 'text-coral-400'}`}>{nameMsg}</p>
+              <p className={`text-sm ${nameMsg.includes('!') ? 'text-sage-400' : 'text-red-500'}`}>{nameMsg}</p>
             )}
             <button type="submit" className="btn-primary" disabled={savingName}>
               {savingName ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
@@ -128,14 +128,14 @@ export default function ProfilePage() {
       )}
 
       {activeTab === 'security' && (
-        <div className="glass-card p-6 space-y-5 animate-fade-in">
+        <div className="card p-6 space-y-5 animate-fade-in">
           <h2 className="section-title">Change Password</h2>
           <form onSubmit={savePw} className="space-y-4">
             {['currentPassword', 'newPassword', 'confirmNew'].map((field, i) => (
               <div key={field}>
                 <label className="input-label">{['Current Password', 'New Password', 'Confirm New Password'][i]}</label>
                 <div className="relative">
-                  <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-white/30" />
+                  <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-ink-100" />
                   <input
                     type={showPw ? 'text' : 'password'}
                     placeholder="••••••••"
@@ -146,7 +146,7 @@ export default function ProfilePage() {
                   />
                   {i === 0 && (
                     <button type="button" onClick={() => setShowPw(!showPw)}
-                      className="absolute right-3 top-1/2 -translate-y-1/2 text-white/30 hover:text-white/70 transition-colors">
+                      className="absolute right-3 top-1/2 -translate-y-1/2 text-ink-100 hover:text-ink-500 transition-colors">
                       {showPw ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                     </button>
                   )}
@@ -154,7 +154,7 @@ export default function ProfilePage() {
               </div>
             ))}
             {pwMsg && (
-              <p className={`text-sm ${pwMsg.includes('!') ? 'text-sage-400' : 'text-coral-400'}`}>{pwMsg}</p>
+              <p className={`text-sm ${pwMsg.includes('!') ? 'text-sage-400' : 'text-red-500'}`}>{pwMsg}</p>
             )}
             <button type="submit" className="btn-primary" disabled={savingPw}>
               {savingPw ? <Loader2 className="w-4 h-4 animate-spin" /> : <Shield className="w-4 h-4" />}

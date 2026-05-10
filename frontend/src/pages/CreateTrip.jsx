@@ -36,7 +36,7 @@ export default function CreateTrip() {
         <p className="page-subtitle">Fill in the details to create your travel plan</p>
       </div>
 
-      <div className="glass-card p-8">
+      <div className="card p-8">
         <form onSubmit={handleSubmit} className="space-y-6">
           {error && (
             <div className="bg-coral-500/10 border border-coral-500/30 rounded-xl px-4 py-3 text-coral-300 text-sm">{error}</div>
@@ -45,7 +45,7 @@ export default function CreateTrip() {
           <div>
             <label className="input-label">Trip Title *</label>
             <div className="relative">
-              <FileText className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-white/30" />
+              <FileText className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-ink-100" />
               <input
                 id="trip-title" type="text" placeholder="e.g. Golden Triangle India, Backpacking Europe…"
                 className="input pl-10" value={form.title} onChange={update('title')} required
@@ -66,7 +66,7 @@ export default function CreateTrip() {
             <div>
               <label className="input-label">Start Date *</label>
               <div className="relative">
-                <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-white/30" />
+                <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-ink-100" />
                 <input
                   id="trip-start" type="date" className="input pl-10"
                   value={form.startDate} onChange={update('startDate')} required
@@ -76,7 +76,7 @@ export default function CreateTrip() {
             <div>
               <label className="input-label">End Date *</label>
               <div className="relative">
-                <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-white/30" />
+                <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-ink-100" />
                 <input
                   id="trip-end" type="date" className="input pl-10"
                   value={form.endDate} onChange={update('endDate')} required
@@ -88,12 +88,12 @@ export default function CreateTrip() {
           <label className="flex items-center gap-3 cursor-pointer">
             <div className="relative">
               <input id="trip-public" type="checkbox" className="peer sr-only" checked={form.isPublic} onChange={update('isPublic')} />
-              <div className="w-10 h-5 bg-white/10 rounded-full peer-checked:bg-primary-600 transition-colors border border-white/20" />
+              <div className="w-10 h-5 bg-cream-200 rounded-full peer-checked:bg-teal-700 transition-colors border border-cream-300" />
               <div className="absolute left-0.5 top-0.5 w-4 h-4 bg-white rounded-full shadow transition-transform peer-checked:translate-x-5" />
             </div>
             <div>
-              <span className="text-sm font-medium text-white/80">Share with Community</span>
-              <p className="text-xs text-white/40">Let other travelers discover and copy your itinerary</p>
+              <span className="text-sm font-medium text-ink-700">Share with Community</span>
+              <p className="text-xs text-ink-300">Let other travelers discover and copy your itinerary</p>
             </div>
           </label>
 

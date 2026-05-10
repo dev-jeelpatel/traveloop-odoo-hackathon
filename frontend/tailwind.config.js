@@ -1,83 +1,86 @@
 /** @type {import('tailwindcss').Config} */
 export default {
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
-  darkMode: 'class',
   theme: {
     extend: {
       colors: {
-        primary: {
-          50: '#eef2ff',
-          100: '#e0e7ff',
-          200: '#c7d2fe',
-          300: '#a5b4fc',
-          400: '#818cf8',
-          500: '#6366f1',
-          600: '#4f46e5',
-          700: '#4338ca',
-          800: '#3730a3',
-          900: '#312e81',
-        },
-        ocean: {
-          300: '#7dd3fc',
-          400: '#38bdf8',
-          500: '#0ea5e9',
-          600: '#0284c7',
-        },
-        coral: {
-          300: '#fda4af',
-          400: '#fb7185',
-          500: '#f43f5e',
-          600: '#e11d48',
+        // ── Brand Palette ─────────────────────────────────────────────────────
+        teal: {
+          50:  '#F0FDFA',
+          100: '#CCFBF1',
+          200: '#99F6E4',
+          300: '#5EEAD4',
+          400: '#2DD4BF',
+          500: '#14B8A6',
+          600: '#0D9488',
+          700: '#0F766E',
+          800: '#115E59',
+          900: '#134E4A',
         },
         sage: {
-          300: '#86efac',
-          400: '#4ade80',
-          500: '#22c55e',
-          600: '#16a34a',
+          50:  '#F1F8EE',
+          100: '#E0EDDA',
+          200: '#C5DDB8',
+          300: '#A7C4A0',   // soft sage green
+          400: '#84AB7A',
+          500: '#5F8D52',
+          600: '#4A7040',
         },
-        amber: {
-          300: '#fcd34d',
-          400: '#fbbf24',
-          500: '#f59e0b',
-          600: '#d97706',
+        cream: {
+          50:  '#FEFDFB',
+          100: '#FAF7F2',   // main background
+          200: '#F5EFE6',   // secondary background
+          300: '#EDE3D5',
+          400: '#D6C8B8',
         },
-        dark: {
-          900: '#0a0a0f',
-          800: '#12121c',
-          700: '#1a1a2e',
-          600: '#16213e',
-          500: '#1e2a4a',
-          400: '#252d4a',
+        // ── Text ──────────────────────────────────────────────────────────────
+        ink: {
+          900: '#1E293B',   // headings
+          700: '#334155',
+          500: '#475569',   // body text
+          300: '#94A3B8',   // muted/placeholder
+          100: '#CBD5E1',
         },
+        // ── State Colors ──────────────────────────────────────────────────────
+        success: '#22C55E',
+        warning: '#F59E0B',
+        danger:  '#EF4444',
+        // ── Border ────────────────────────────────────────────────────────────
+        border: '#D6D3D1',
       },
       fontFamily: {
-        sans: ['Inter', 'system-ui', 'sans-serif'],
-        display: ['Outfit', 'system-ui', 'sans-serif'],
+        sans:    ['Inter', 'system-ui', 'sans-serif'],
+        display: ['Poppins', 'system-ui', 'sans-serif'],
       },
-      backgroundImage: {
-        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-        'mesh-1': 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-        'mesh-2': 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
-        'mesh-3': 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)',
-        'mesh-4': 'linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)',
-        'mesh-5': 'linear-gradient(135deg, #fa709a 0%, #fee140 100%)',
+      borderRadius: {
+        '2xl': '1rem',
+        '3xl': '1.5rem',
+        '4xl': '2rem',
+      },
+      boxShadow: {
+        'card':   '0 4px 20px rgba(0,0,0,0.05)',
+        'card-md':'0 8px 30px rgba(0,0,0,0.08)',
+        'card-lg':'0 16px 48px rgba(0,0,0,0.1)',
+        'teal':   '0 8px 24px rgba(15,118,110,0.25)',
+        'teal-lg':'0 12px 32px rgba(15,118,110,0.35)',
       },
       animation: {
-        'fade-in': 'fadeIn 0.5s ease-out',
-        'slide-up': 'slideUp 0.4s ease-out',
-        'slide-in-right': 'slideInRight 0.4s ease-out',
-        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-        'float': 'float 6s ease-in-out infinite',
-        'glow': 'glow 2s ease-in-out infinite alternate',
+        'fade-in':   'fadeIn 0.4s ease-out',
+        'slide-up':  'slideUp 0.4s ease-out',
+        'float':     'float 6s ease-in-out infinite',
+        'pulse-slow':'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
       },
       keyframes: {
-        fadeIn: { from: { opacity: 0 }, to: { opacity: 1 } },
-        slideUp: { from: { opacity: 0, transform: 'translateY(20px)' }, to: { opacity: 1, transform: 'translateY(0)' } },
-        slideInRight: { from: { opacity: 0, transform: 'translateX(20px)' }, to: { opacity: 1, transform: 'translateX(0)' } },
-        float: { '0%, 100%': { transform: 'translateY(0)' }, '50%': { transform: 'translateY(-10px)' } },
-        glow: { from: { boxShadow: '0 0 20px rgba(99,102,241,0.3)' }, to: { boxShadow: '0 0 40px rgba(99,102,241,0.7)' } },
+        fadeIn:  { from: { opacity: 0 }, to: { opacity: 1 } },
+        slideUp: { from: { opacity: 0, transform: 'translateY(16px)' }, to: { opacity: 1, transform: 'translateY(0)' } },
+        float:   { '0%,100%': { transform: 'translateY(0)' }, '50%': { transform: 'translateY(-8px)' } },
       },
-      backdropBlur: { xs: '2px' },
+      backgroundImage: {
+        'hero-gradient': 'linear-gradient(135deg, #0F766E 0%, #14B8A6 50%, #99F6E4 100%)',
+        'teal-gradient': 'linear-gradient(135deg, #0F766E, #14B8A6)',
+        'sage-gradient': 'linear-gradient(135deg, #A7C4A0, #5F8D52)',
+        'warm-gradient': 'linear-gradient(135deg, #FAF7F2, #F5EFE6)',
+      },
     },
   },
   plugins: [],
