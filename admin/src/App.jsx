@@ -16,6 +16,8 @@ import ManageUsers  from './pages/ManageUsers';
 import Community    from './pages/Community';
 import Reports      from './pages/Reports';
 import Settings     from './pages/Settings';
+import Notifications from './pages/Notifications';
+import Profile      from './pages/Profile';
 
 /* ── Route Guards ────────────────────────────────────────────────────────── */
 function ProtectedRoute({ children }) {
@@ -63,9 +65,11 @@ export default function App() {
           <Route path="checklists" element={<SeasonalChecklists />} />
           <Route path="analytics"  element={<Analytics />} />
           <Route path="users"      element={<ManageUsers />} />
-          <Route path="community"  element={<Community />} />
-          <Route path="reports"    element={<Reports />} />
-          <Route path="settings"   element={<Settings />} />
+          <Route path="community"      element={<Community />} />
+          <Route path="reports"        element={<Reports />} />
+          <Route path="settings"       element={<Settings />} />
+          <Route path="notifications"  element={<Notifications />} />
+          <Route path="profile"        element={<Profile />} />
         </Route>
 
         <Route path="*" element={<Navigate to="/dashboard" replace />} />

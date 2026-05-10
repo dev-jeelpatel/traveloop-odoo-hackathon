@@ -3,9 +3,10 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useState } from 'react';
 import useAuthStore from '../store/authStore';
 import {
-  LayoutDashboard, Map, PackageCheck, Globe, Activity, CheckSquare,
-  BarChart3, Users, Megaphone, FileText, Settings, LogOut,
-  Shield, Menu, X, Bell, Search, PlusCircle, ChevronRight
+  LayoutDashboard, Map, PackageCheck, Globe, Activity,
+  CheckSquare, BarChart3, Users, Megaphone, FileText,
+  Settings, LogOut, Shield, Menu, X, Bell, Search,
+  PlusCircle, ChevronRight, UserCircle
 } from 'lucide-react';
 
 const NAV = [
@@ -21,10 +22,12 @@ const NAV = [
     { to:'/checklists', icon:CheckSquare,  label:'Checklists' },
   ]},
   { section: 'Platform', items: [
-    { to:'/users',      icon:Users,      label:'Users' },
-    { to:'/community',  icon:Megaphone,  label:'Community' },
-    { to:'/reports',    icon:FileText,   label:'Reports' },
-    { to:'/settings',   icon:Settings,   label:'Settings' },
+    { to:'/users',         icon:Users,       label:'Users' },
+    { to:'/community',     icon:Megaphone,   label:'Community' },
+    { to:'/reports',       icon:FileText,    label:'Reports' },
+    { to:'/notifications', icon:Bell,        label:'Notifications' },
+    { to:'/settings',      icon:Settings,    label:'Settings' },
+    { to:'/profile',       icon:UserCircle,  label:'My Profile' },
   ]},
 ];
 
