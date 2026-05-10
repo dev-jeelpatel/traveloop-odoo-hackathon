@@ -13,6 +13,7 @@ const communityRoutes = require('./routes/community.routes');
 const cityRoutes = require('./routes/city.routes');
 const userRoutes = require('./routes/user.routes');
 const analyticsRoutes = require('./routes/analytics.routes');
+const publicRoutes   = require('./routes/public.routes');
 
 const app = express();
 
@@ -37,6 +38,7 @@ app.use('/api/community', communityRoutes);
 app.use('/api/cities', cityRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/analytics', analyticsRoutes);
+app.use('/api/public',   publicRoutes);
 
 // ── 404 handler ───────────────────────────────────────────────────────────────
 app.use((req, res) => res.status(404).json({ error: 'Route not found' }));
