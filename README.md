@@ -1,98 +1,106 @@
 # Traveloop 🌍
 
-> A free, full-stack travel planning app built with React + Node.js + MySQL + Prisma.
+> A modern, full-stack travel planning platform and centralized admin console built with React, Node.js, Express, and Prisma.
 
-## Tech Stack
-| Layer | Tech |
-|---|---|
-| Frontend | React + Vite + Tailwind CSS v3 |
-| Backend | Node.js + Express |
-| ORM | Prisma |
-| Database | MySQL (XAMPP local / Railway.app cloud) |
-| Auth | JWT + bcrypt |
-| Maps | Leaflet.js + OpenStreetMap |
-| Charts | Recharts |
-| Email | Nodemailer + Gmail SMTP |
+![Traveloop](https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=1200&q=80)
+
+## 🎯 Project Overview
+Traveloop simplifies trip planning by centralizing itineraries, budgets, packing lists, and journaling in a beautifully designed, modern interface. It also includes a robust, role-based **Admin Console** for platform management and analytics. 
+
+Recently updated to feature enterprise-grade security headers, robust request validation, and an overhauled UI utilizing clean typography and Lucide-React iconography.
 
 ---
 
-## 🚀 Getting Started
+## 🛠 Tech Stack
+
+| Layer | Technology |
+|---|---|
+| **Frontend** | React, Vite, Framer Motion, Tailwind CSS v3, Lucide-React |
+| **Admin Panel** | React, Vite, Recharts (Analytics), Axios Interceptors |
+| **Backend** | Node.js, Express, Helmet (Security), CORS, Rate Limiting |
+| **ORM & DB** | Prisma ORM, SQLite (Local Dev) / MySQL (Production Ready) |
+| **Auth** | JWT (JSON Web Tokens), bcryptjs, Role-Based Access Control (RBAC) |
+| **Maps** | Leaflet.js, OpenStreetMap |
+| **Email** | Nodemailer |
+
+---
+
+## 🚀 Features
+
+### User Platform (`/frontend`)
+*   **Intelligent Dashboard:** Dynamic greeting, personalized trip recommendations, and stat tracking.
+*   **Itinerary Builder:** Plan multi-city stops, attach activities, and visualize routes on interactive Leaflet maps.
+*   **Budget Tracker:** Visual expense tracking with category breakdowns via Recharts.
+*   **Travel Utilities:** Interactive packing checklists and a rich-text trip journal.
+*   **Community:** Publish itineraries to the public gallery, discover top destinations, and seamlessly clone other users' trips to your profile.
+
+### Admin Console (`/admin`)
+*   **Secure Auth:** Strict route guarding, infinite-load prevention, and dedicated admin credentials.
+*   **Analytics Dashboard:** Real-time metrics visualization including user signups, popular destinations, and seasonal trends.
+*   **User Management:** Global overview of all registered users with abilities to view activity, assign roles, and manage access.
+*   **Platform Oversight:** Monitor public trips, manage global activities, and oversee community engagement.
+
+### Backend Security (`/backend`)
+*   **Hardened APIs:** Configured `helmet` for secure HTTP headers and cross-origin policies.
+*   **Strict CORS:** Whitelisted domains to prevent cross-site request forgery.
+*   **Sanitization:** Custom middleware to trim and sanitize incoming request payloads.
+*   **Validation:** Robust regex-based validation for emails and password strength on user and admin signups.
+
+---
+
+## 💻 Getting Started
 
 ### Prerequisites
-- Node.js 18+
-- MySQL running locally (XAMPP recommended) or a free cloud DB (Railway.app)
+*   Node.js 18+
+*   NPM or Yarn
+*   *(Optional)* MySQL if migrating from SQLite.
 
-### 1. Clone & setup
-
+### 1. Repository Setup
 ```bash
-git clone https://github.com/your-username/traveloop-odoo-hackathon.git
+git clone https://github.com/dev-jeelpatel/traveloop-odoo-hackathon.git
 cd traveloop-odoo-hackathon
 ```
 
-### 2. Backend setup
-
+### 2. Backend Initialization (Port 5000)
 ```bash
 cd backend
 npm install
 
-# Copy and edit .env
+# Configure Environment
 cp .env.example .env
-# Edit DATABASE_URL, JWT_SECRET, EMAIL_FROM, EMAIL_PASSWORD
+# Important: Update JWT_SECRET and SMTP details in .env
 
-# Push schema to MySQL
+# Initialize Database
 npx prisma db push
+node prisma/seed.js
 
-# Generate Prisma client
-npx prisma generate
-
-# Start dev server
+# Start Development Server
 npm run dev
-# → http://localhost:5000
 ```
 
-### 3. Frontend setup
-
+### 3. User Frontend Initialization (Port 5173)
 ```bash
+# In a new terminal
 cd frontend
 npm install
 npm run dev
-# → http://localhost:5173
+```
+
+### 4. Admin Panel Initialization (Port 5174)
+```bash
+# In a new terminal
+cd admin
+npm install
+npm run dev
 ```
 
 ---
 
-## 📱 Screens
+## 🗄 Database Architecture
 
-1. **Login / Signup** — JWT auth with email verification
-2. **Dashboard** — Personalized greeting + stats + recent trips
-3. **My Trips** — Filterable trip list with status badges
-4. **Create Trip** — Title, description, dates, public toggle
-5. **Trip Detail** — Overview, route, quick nav to sub-pages
-6. **Itinerary Builder** — Add city stops, attach activities, view on map
-7. **Budget** — Allocation by category, pie chart, expense tracker
-8. **Packing Checklist** — Multiple lists, checkboxes with progress bars
-9. **Trip Notes/Journal** — Rich text notes with timestamps
-10. **City Search** — Debounced search + Leaflet map preview
-11. **Activity Search** — Category filter + activity cards
-12. **Community** — Public itinerary gallery, copy trips
-13. **Public Itinerary** — Shareable view with map
-14. **Profile/Settings** — Edit name, change password, verification badge
+Traveloop features a fully normalized relational database schema via Prisma.
+Key models include: `User`, `Trip`, `City`, `Stop`, `Activity`, `Budget`, `Expense`, `Checklist`, `Note`, and `CommunityShare`.
+
+*(To migrate to MySQL for production, simply update the `DATABASE_URL` inside `.env` to your MySQL connection string and re-run `npx prisma db push`)*.
 
 ---
-
-## 🗄 Database schema
-
-All 12 tables defined in `backend/prisma/schema.prisma`:
-`users` · `trips` · `cities` · `stops` · `activities` · `stop_activities` · `budgets` · `expenses` · `checklists` · `checklist_items` · `notes` · `community_shares` · `trip_copies`
-
----
-
-## 🌐 Deployment (Free)
-
-| Service | What |
-|---|---|
-| **Vercel** | Frontend — `cd frontend && npx vercel` |
-| **Render.com** | Backend — connect GitHub repo |
-| **Railway.app** | MySQL database (free tier) |
-
-Set `VITE_API_URL` in Vercel to your Render backend URL.
