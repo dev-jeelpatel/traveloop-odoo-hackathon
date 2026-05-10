@@ -36,10 +36,15 @@ const useAuthStore = create(
         const token = localStorage.getItem('traveloop_admin_token');
         if (!token) { set({ admin: null, loading: false }); return; }
         try {
-          const { data } = await api.get('/auth/me');
+          // Timeout after 6 seconds — don't leave user stuck on spinner
+          const controller = new AbortController();
+          const timer = setTimeout(() => controller.abort(), 6000);
+          const { data } = await api.get('/auth/me', { signal: controller.signal });
+          clearTimeout(timer);
           if (data.role !== 'ADMIN') throw new Error('Not admin');
           set({ admin: data });
-        } catch {
+        } catch (err) {
+          // Network timeout or invalid token — clear credentials silently
           localStorage.removeItem('traveloop_admin_token');
           set({ admin: null, token: null });
         } finally {

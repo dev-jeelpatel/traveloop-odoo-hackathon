@@ -3,7 +3,7 @@ import { useAuth } from '../contexts/AuthContext';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   LayoutDashboard, Map, PlusCircle, Globe, Search as SearchIcon, Users,
-  User, LogOut, Compass, Menu, X, Bell, Settings
+  User, LogOut, Compass, Menu, X, Bell, Settings, Shield
 } from 'lucide-react';
 import { useState } from 'react';
 
@@ -80,6 +80,16 @@ function Sidebar({ user, handleLogout, setSidebarOpen }) {
             </div>
             Sign Out
           </button>
+          
+          <div className="my-2 border-t border-dashed" style={{ borderColor: 'rgba(124,154,126,0.2)' }} />
+          
+          <a href="http://localhost:5174/admin" target="_blank" rel="noreferrer"
+            className="sidebar-link w-full text-[#1E5E52] hover:bg-[#1E5E52]/10 font-medium">
+            <div className="w-7 h-7 rounded-xl flex items-center justify-center bg-[#1E5E52]/10">
+              <Shield className="w-3.5 h-3.5 text-[#1E5E52]" />
+            </div>
+            Admin Console
+          </a>
         </div>
       </nav>
 

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import api from '../lib/api';
-import { Users, Search, Copy, Eye, MapPin, User, Loader2 } from 'lucide-react';
+import { Users, Search, Copy, Eye, MapPin, User, Loader2, ArrowRight } from 'lucide-react';
 import { format } from 'date-fns';
 
 const MESHES = ['trip-card-mesh-1','trip-card-mesh-2','trip-card-mesh-3','trip-card-mesh-4','trip-card-mesh-5'];
@@ -83,7 +83,7 @@ export default function CommunityPage() {
                 {share.trip?.stops?.length > 0 && (
                   <div className="flex items-center gap-1 text-ink-100 text-xs">
                     <MapPin className="w-3 h-3 shrink-0" />
-                    {share.trip.stops.map(s => s.city?.name).filter(Boolean).slice(0, 3).join(' → ')}
+                    {share.trip.stops.map(s => s.city?.name).filter(Boolean).slice(0, 3).map((name, i, arr) => <span key={i} className="flex items-center">{name}{i < arr.length - 1 && <ArrowRight className="w-2.5 h-2.5 mx-1 inline" />}</span>)}
                   </div>
                 )}
 

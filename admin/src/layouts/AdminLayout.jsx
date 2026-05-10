@@ -6,7 +6,7 @@ import {
   LayoutDashboard, Map, PackageCheck, Globe, Activity,
   CheckSquare, BarChart3, Users, Megaphone, FileText,
   Settings, LogOut, Shield, Menu, X, Bell, Search,
-  PlusCircle, ChevronRight, UserCircle
+  PlusCircle, ChevronRight, UserCircle, ExternalLink
 } from 'lucide-react';
 
 const NAV = [
@@ -99,6 +99,11 @@ function Sidebar({ onClose }) {
 
       {/* User chip */}
       <div style={{ padding:'0.75rem' }}>
+        <a href="http://localhost:5173" target="_blank" rel="noreferrer"
+          className="nav-link" style={{ width:'100%', color:'#2E7D6B', background:'rgba(46,125,107,0.04)', border:'1px solid rgba(46,125,107,0.15)', marginBottom:'0.5rem', textDecoration:'none' }}>
+          <ExternalLink size={14} />
+          View Live Website
+        </a>
         <button onClick={() => { logout(); navigate('/login'); }}
           className="nav-link" style={{ width:'100%', color:'#EF4444', background:'rgba(239,68,68,0.04)', border:'1px solid rgba(239,68,68,0.15)', marginBottom:'0.5rem' }}>
           <LogOut size={14} />

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import api from '../lib/api';
-import { Search, Star, Clock, DollarSign, MapPin, Filter } from 'lucide-react';
+import { Search, Star, Clock, DollarSign, MapPin, Filter, ArrowRight } from 'lucide-react';
 
 const CATEGORIES = ['ALL','SIGHTSEEING','FOOD','ADVENTURE','CULTURE','SHOPPING','NIGHTLIFE','RELAXATION','TRANSPORT','ACCOMMODATION','OTHER'];
 const CAT_COLOR = {
@@ -90,8 +90,8 @@ export default function ActivitySearch() {
               </div>
               {act.externalUrl && (
                 <a href={act.externalUrl} target="_blank" rel="noopener noreferrer"
-                  className="text-xs text-teal-600 hover:text-teal-500 transition-colors">
-                  Learn more →
+                  className="text-xs text-teal-600 hover:text-teal-500 transition-colors inline-flex items-center gap-1">
+                  Learn more <ArrowRight className="w-3 h-3" />
                 </a>
               )}
             </div>

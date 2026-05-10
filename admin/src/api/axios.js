@@ -12,12 +12,18 @@ api.interceptors.response.use(
   (res) => res,
   (err) => {
     if (err.response?.status === 401) {
-      localStorage.removeItem('traveloop_admin_token');
-      localStorage.removeItem('traveloop_admin');
-      window.location.href = '/admin/login';
+      const isOnLoginPage = window.location.pathname.includes('/login');
+      const isCheckingAuth = err.config?.url?.includes('/auth/me');
+      // Don't redirect if already on login or this was just the initial auth check
+      if (!isOnLoginPage && !isCheckingAuth) {
+        localStorage.removeItem('traveloop_admin_token');
+        localStorage.removeItem('traveloop_admin');
+        window.location.href = '/admin/login';
+      }
     }
     return Promise.reject(err);
   }
 );
 
 export default api;
+

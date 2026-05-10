@@ -97,7 +97,7 @@ export default function TripDetail() {
                     <MapPin className="w-3 h-3 text-teal-600" />
                     {stop.city?.name}, {stop.city?.country}
                   </span>
-                  {i < trip.stops.length - 1 && <span className="text-ink-900/20">→</span>}
+                  {i < trip.stops.length - 1 && <span className="text-ink-900/20"><ArrowRight className="w-4 h-4 inline" /></span>}
                 </span>
               ))}
           </div>
@@ -125,7 +125,7 @@ export default function TripDetail() {
               <p className="text-3xl font-bold text-ink-900">{trip.budget.currency} {Number(trip.budget.totalBudget).toLocaleString()}</p>
               <p className="text-ink-300 text-sm mt-1">Total budget</p>
             </div>
-            <Link to={`/trips/${id}/budget`} className="btn-secondary text-sm">Manage Budget →</Link>
+            <Link to={`/trips/${id}/budget`} className="btn-secondary text-sm inline-flex items-center gap-1">Manage Budget <ArrowRight className="w-4 h-4" /></Link>
           </div>
         </div>
       )}
@@ -135,7 +135,7 @@ export default function TripDetail() {
         <div className="card p-5">
           <div className="flex items-center justify-between mb-3">
             <h2 className="section-title mb-0">Packing Progress</h2>
-            <Link to={`/trips/${id}/checklist`} className="text-xs text-teal-600 hover:text-teal-500">View all →</Link>
+            <Link to={`/trips/${id}/checklist`} className="text-xs text-teal-600 hover:text-teal-500 inline-flex items-center gap-1">View all <ArrowRight className="w-3 h-3" /></Link>
           </div>
           {trip.checklists.slice(0, 1).map(list => {
             const total = list.items?.length || 0;
