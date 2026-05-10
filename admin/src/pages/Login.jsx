@@ -120,13 +120,6 @@ export default function Login() {
                 {loading ? 'Signing in...' : 'Sign In to Admin Console'}
               </motion.button>
             </form>
-            <div className="divider" />
-            <p style={{ textAlign:'center', fontSize:'0.875rem', color:'#6B7280' }}>
-              New administrator?{' '}
-              <Link to="/signup" style={{ color:'#2E7D6B', fontWeight:600, textDecoration:'none', display:'inline-flex', alignItems:'center', gap:'0.25rem' }}>
-                Create admin account <ArrowRight size={14} />
-              </Link>
-            </p>
           </div>
         </motion.div>
       </div>
