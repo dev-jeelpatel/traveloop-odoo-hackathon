@@ -2,18 +2,19 @@ const express = require('express');
 const cors = require('cors');
 const helmet = require('helmet');
 
-const authRoutes      = require('./routes/auth.routes');
-const tripRoutes      = require('./routes/trip.routes');
-const stopRoutes      = require('./routes/stop.routes');
-const activityRoutes  = require('./routes/activity.routes');
-const budgetRoutes    = require('./routes/budget.routes');
-const expenseRoutes   = require('./routes/expense.routes');
+const authRoutes = require('./routes/auth.routes');
+const tripRoutes = require('./routes/trip.routes');
+const stopRoutes = require('./routes/stop.routes');
+const activityRoutes = require('./routes/activity.routes');
+const budgetRoutes = require('./routes/budget.routes');
+const expenseRoutes = require('./routes/expense.routes');
 const checklistRoutes = require('./routes/checklist.routes');
-const noteRoutes      = require('./routes/note.routes');
+const noteRoutes = require('./routes/note.routes');
 const communityRoutes = require('./routes/community.routes');
-const cityRoutes      = require('./routes/city.routes');
-const userRoutes      = require('./routes/user.routes');
+const cityRoutes = require('./routes/city.routes');
+const userRoutes = require('./routes/user.routes');
 const analyticsRoutes = require('./routes/analytics.routes');
+const publicRoutes = require('./routes/public.routes');
 
 const app = express();
 
@@ -59,18 +60,18 @@ app.use((req, _res, next) => {
 app.get('/health', (_req, res) => res.json({ status: 'ok', timestamp: new Date() }));
 
 // ── API Routes ────────────────────────────────────────────────────────────────
-app.use('/api/auth',       authRoutes);
-app.use('/api/trips',      tripRoutes);
-app.use('/api/stops',      stopRoutes);
+app.use('/api/auth', authRoutes);
+app.use('/api/trips', tripRoutes);
+app.use('/api/stops', stopRoutes);
 app.use('/api/activities', activityRoutes);
-app.use('/api/budgets',    budgetRoutes);
-app.use('/api/expenses',   expenseRoutes);
+app.use('/api/budgets', budgetRoutes);
+app.use('/api/expenses', expenseRoutes);
 app.use('/api/checklists', checklistRoutes);
-app.use('/api/notes',      noteRoutes);
-app.use('/api/community',  communityRoutes);
-app.use('/api/cities',     cityRoutes);
-app.use('/api/users',      userRoutes);
-app.use('/api/analytics',  analyticsRoutes);
+app.use('/api/notes', noteRoutes);
+app.use('/api/community', communityRoutes);
+app.use('/api/cities', cityRoutes);
+app.use('/api/users', userRoutes);
+app.use('/api/analytics', analyticsRoutes);
 
 // ── 404 ───────────────────────────────────────────────────────────────────────
 app.use((_req, res) => res.status(404).json({ error: 'Route not found' }));

@@ -2,11 +2,11 @@ import { useEffect, useState } from 'react';
 import api from '../lib/api';
 import { Search, Star, Clock, DollarSign, MapPin, Filter, ArrowRight } from 'lucide-react';
 
-const CATEGORIES = ['ALL','SIGHTSEEING','FOOD','ADVENTURE','CULTURE','SHOPPING','NIGHTLIFE','RELAXATION','TRANSPORT','ACCOMMODATION','OTHER'];
+const CATEGORIES = ['ALL', 'SIGHTSEEING', 'FOOD', 'ADVENTURE', 'CULTURE', 'SHOPPING', 'NIGHTLIFE', 'RELAXATION', 'TRANSPORT', 'ACCOMMODATION', 'OTHER'];
 const CAT_COLOR = {
-  SIGHTSEEING:'badge-teal', FOOD:'badge-amber', ADVENTURE:'badge-red',
-  CULTURE:'badge-blue', SHOPPING:'badge-sage', NIGHTLIFE:'badge-teal',
-  RELAXATION:'badge-sage', TRANSPORT:'badge-blue', ACCOMMODATION:'badge-amber', OTHER:'badge-teal',
+  SIGHTSEEING: 'badge-teal', FOOD: 'badge-amber', ADVENTURE: 'badge-red',
+  CULTURE: 'badge-blue', SHOPPING: 'badge-sage', NIGHTLIFE: 'badge-teal',
+  RELAXATION: 'badge-sage', TRANSPORT: 'badge-blue', ACCOMMODATION: 'badge-amber', OTHER: 'badge-teal',
 };
 
 export default function ActivitySearch() {
@@ -57,7 +57,7 @@ export default function ActivitySearch() {
 
       {loading ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {[1,2,3,4,5,6].map(i => <div key={i} className="skeleton h-40" />)}
+          {[1, 2, 3, 4, 5, 6].map(i => <div key={i} className="skeleton h-40" />)}
         </div>
       ) : activities.length === 0 ? (
         <div className="card p-12 text-center">
