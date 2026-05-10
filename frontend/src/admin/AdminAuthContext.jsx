@@ -1,0 +1,52 @@
+import { createContext, useContext, useState, useEffect } from 'react';
+import api from '../lib/api';
+
+const AdminAuthContext = createContext(null);
+
+export function AdminAuthProvider({ children }) {
+  const [admin, setAdmin] = useState(() => {
+    try { return JSON.parse(localStorage.getItem('traveloop_admin')); } catch { return null; }
+  });
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const token = localStorage.getItem('traveloop_admin_token');
+    if (token) {
+      api.get('/auth/me', { headers: { Authorization: `Bearer ${token}` } })
+        .then(({ data }) => {
+          if (data.role !== 'ADMIN') throw new Error('Not admin');
+          setAdmin(data);
+          localStorage.setItem('traveloop_admin', JSON.stringify(data));
+        })
+        .catch(() => {
+          localStorage.removeItem('traveloop_admin_token');
+          localStorage.removeItem('traveloop_admin');
+          setAdmin(null);
+        })
+        .finally(() => setLoading(false));
+    } else { setLoading(false); }
+  }, []);
+
+  const adminLogin = async (email, password) => {
+    const { data } = await api.post('/auth/login', { email, password });
+    if (data.user.role !== 'ADMIN') throw new Error('Access denied: not an admin account');
+    localStorage.setItem('traveloop_admin_token', data.token);
+    localStorage.setItem('traveloop_admin', JSON.stringify(data.user));
+    setAdmin(data.user);
+    return data;
+  };
+
+  const adminLogout = () => {
+    localStorage.removeItem('traveloop_admin_token');
+    localStorage.removeItem('traveloop_admin');
+    setAdmin(null);
+  };
+
+  return (
+    <AdminAuthContext.Provider value={{ admin, loading, adminLogin, adminLogout }}>
+      {children}
+    </AdminAuthContext.Provider>
+  );
+}
+
+export const useAdminAuth = () => useContext(AdminAuthContext);
